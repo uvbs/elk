@@ -13,7 +13,7 @@
 
     private string title = "Https used by \"Temporary redirects\" (302, 307)";
     private string description = "The server uses \"Temporary redirects\" (302, 307) to lead the user to the HTTPS server.";
-    private string concequences = "By redirecting the HTTP connection through the attackers HTTP(S) reverse proxy somewhere in the " +
+    private string consequences = "By redirecting the HTTP connection through the attackers HTTP(S) reverse proxy somewhere in the " +
                           "plain text communication the reverse proxy server must do the final request to the HTTPS server in place of the client.";
     private string setup = "MITM, DNS poisoning, HTTP reverse proxy, Sniffing";
     private List<VulnerableElementAndConsequences> vulnElementAndConsequences = new List<VulnerableElementAndConsequences>();
@@ -27,7 +27,7 @@
 
     public string Description { get { return this.description; } }
 
-    public string Concequences { get { return this.concequences; } }
+    public string Consequences { get { return this.consequences; } }
 
     public string Setup { get { return this.setup; } }
 

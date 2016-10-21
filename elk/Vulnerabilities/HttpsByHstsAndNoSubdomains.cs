@@ -15,7 +15,7 @@
     private string description = "The target system is protected by HSTS and cannot be intercepted because the client requests the server with HTTPS by default." +
                          "If HSTS did not set the subdomain feature the attacker can inject a redirect to a subdomain what can give him access to sensitive " +
                          "header data.";
-    private string concequences = "By having access to the header data the attacker can see sensitive data like cookies (session information).";
+    private string consequences = "By having access to the header data the attacker can see sensitive data like cookies (session information).";
     private string setup = "MITM, DNS poisoning, HTTP reverse proxy, sniffing";
     private List<VulnerableElementAndConsequences> vulnElementAndConsequences = new List<VulnerableElementAndConsequences>();
 
@@ -28,7 +28,7 @@
 
     public string Description { get { return this.description; } }
 
-    public string Concequences { get { return this.concequences; } }
+    public string Consequences { get { return this.consequences; } }
 
     public string Setup { get { return this.setup; } }
 

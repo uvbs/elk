@@ -14,7 +14,7 @@
     private string title = "Chain elements and their sub-domains to target protected by HSTS";
     private string description = "The whole system chain including all subdomains to the target system is protected by HSTS and cannot be intercepted because client requests to any element of the chain will start with HTTPS by default. " +
                                  "Therefore the server connection can't be attacked except by client vulnerabilities.";
-    private string concequences = "-";
+    private string consequences = "-";
     private string setup = "-";
     private List<VulnerableElementAndConsequences> vulnElementAndConsequences = new List<VulnerableElementAndConsequences>();
 
@@ -27,7 +27,7 @@
 
     public string Description { get { return this.description; } }
 
-    public string Concequences { get { return this.concequences; } }
+    public string Consequences { get { return this.consequences; } }
 
     public string Setup { get { return this.setup; } }
 

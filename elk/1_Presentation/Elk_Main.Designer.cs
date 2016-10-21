@@ -1,4 +1,4 @@
-﻿namespace Elk
+﻿namespace Elk.Presentation
 {
   partial class Elk_Main
   {
@@ -47,6 +47,9 @@
       this.tp_HostChain = new System.Windows.Forms.TabPage();
       this.tv_ResponseEntities = new System.Windows.Forms.TreeView();
       this.gb_RequestResults = new System.Windows.Forms.GroupBox();
+      this.cb_Https = new System.Windows.Forms.CheckBox();
+      this.cb_Http = new System.Windows.Forms.CheckBox();
+      this.l_OpenPorts = new System.Windows.Forms.Label();
       this.tb_Server = new System.Windows.Forms.TextBox();
       this.l_Server = new System.Windows.Forms.Label();
       this.tb_Hpkp = new System.Windows.Forms.TextBox();
@@ -66,9 +69,6 @@
       this.tc_AnalyzeHttpServer = new System.Windows.Forms.TabControl();
       this.tp_ServerVulnerabilities = new System.Windows.Forms.TabPage();
       this.dgv_Vulnerabilities = new System.Windows.Forms.DataGridView();
-      this.l_OpenPorts = new System.Windows.Forms.Label();
-      this.cb_Http = new System.Windows.Forms.CheckBox();
-      this.cb_Https = new System.Windows.Forms.CheckBox();
       this.tp_ExternalBackRedirect = new System.Windows.Forms.TabPage();
       this.tp_PageLinksTo.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.dgv_references)).BeginInit();
@@ -295,6 +295,38 @@
       this.gb_RequestResults.TabIndex = 4;
       this.gb_RequestResults.TabStop = false;
       // 
+      // cb_Https
+      // 
+      this.cb_Https.AutoSize = true;
+      this.cb_Https.Enabled = false;
+      this.cb_Https.Location = new System.Drawing.Point(257, 28);
+      this.cb_Https.Name = "cb_Https";
+      this.cb_Https.Size = new System.Drawing.Size(85, 17);
+      this.cb_Https.TabIndex = 18;
+      this.cb_Https.Text = "HTTPS/443";
+      this.cb_Https.UseVisualStyleBackColor = true;
+      // 
+      // cb_Http
+      // 
+      this.cb_Http.AutoSize = true;
+      this.cb_Http.Enabled = false;
+      this.cb_Http.Location = new System.Drawing.Point(161, 29);
+      this.cb_Http.Name = "cb_Http";
+      this.cb_Http.Size = new System.Drawing.Size(72, 17);
+      this.cb_Http.TabIndex = 17;
+      this.cb_Http.Text = "HTTP/80";
+      this.cb_Http.UseVisualStyleBackColor = true;
+      // 
+      // l_OpenPorts
+      // 
+      this.l_OpenPorts.AutoSize = true;
+      this.l_OpenPorts.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.l_OpenPorts.Location = new System.Drawing.Point(22, 29);
+      this.l_OpenPorts.Name = "l_OpenPorts";
+      this.l_OpenPorts.Size = new System.Drawing.Size(69, 13);
+      this.l_OpenPorts.TabIndex = 16;
+      this.l_OpenPorts.Text = "Open ports";
+      // 
       // tb_Server
       // 
       this.tb_Server.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -488,38 +520,7 @@
       this.dgv_Vulnerabilities.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
       this.dgv_Vulnerabilities.Size = new System.Drawing.Size(1147, 497);
       this.dgv_Vulnerabilities.TabIndex = 0;
-      // 
-      // l_OpenPorts
-      // 
-      this.l_OpenPorts.AutoSize = true;
-      this.l_OpenPorts.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.l_OpenPorts.Location = new System.Drawing.Point(22, 29);
-      this.l_OpenPorts.Name = "l_OpenPorts";
-      this.l_OpenPorts.Size = new System.Drawing.Size(69, 13);
-      this.l_OpenPorts.TabIndex = 16;
-      this.l_OpenPorts.Text = "Open ports";
-      // 
-      // cb_Http
-      // 
-      this.cb_Http.AutoSize = true;
-      this.cb_Http.Enabled = false;
-      this.cb_Http.Location = new System.Drawing.Point(161, 29);
-      this.cb_Http.Name = "cb_Http";
-      this.cb_Http.Size = new System.Drawing.Size(72, 17);
-      this.cb_Http.TabIndex = 17;
-      this.cb_Http.Text = "HTTP/80";
-      this.cb_Http.UseVisualStyleBackColor = true;
-      // 
-      // cb_Https
-      // 
-      this.cb_Https.AutoSize = true;
-      this.cb_Https.Enabled = false;
-      this.cb_Https.Location = new System.Drawing.Point(257, 28);
-      this.cb_Https.Name = "cb_Https";
-      this.cb_Https.Size = new System.Drawing.Size(85, 17);
-      this.cb_Https.TabIndex = 18;
-      this.cb_Https.Text = "HTTPS/443";
-      this.cb_Https.UseVisualStyleBackColor = true;
+      this.dgv_Vulnerabilities.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.dgv_Vulnerabilities_MouseDoubleClick);
       // 
       // tp_ExternalBackRedirect
       // 
@@ -531,7 +532,7 @@
       this.tp_ExternalBackRedirect.Text = "External back redirect";
       this.tp_ExternalBackRedirect.UseVisualStyleBackColor = true;
       // 
-      // AnalyzeHttpServer_Main
+      // Elk_Main
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -546,8 +547,8 @@
       this.Controls.Add(this.label1);
       this.Controls.Add(this.tb_DestinationUrl);
       this.MinimumSize = new System.Drawing.Size(1218, 674);
-      this.Name = "AnalyzeHttpServer_Main";
-      this.Text = "Analyze HTTP server";
+      this.Name = "Elk_Main";
+      this.Text = "Elk - The HTTP request server chain analyzer";
       this.tp_PageLinksTo.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.dgv_references)).EndInit();
       this.tp_Crawler.ResumeLayout(false);

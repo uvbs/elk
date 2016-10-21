@@ -101,17 +101,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="1_Presentation\Elk_Main_Dgv_References.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="1_Presentation\Elk_Main_Dgv_Vulnerabilities.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="1_Presentation\Elk_Main_Gui_Events.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="1_Presentation\Elk_Main.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="1_Presentation\Elk_Main.Designer.cs">
       <DependentUpon>Elk_Main.cs</DependentUpon>
     </Compile>
+    <Compile Include="1_Presentation\VulnerabilityDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="1_Presentation\VulnerabilityDetails.Designer.cs">
+      <DependentUpon>VulnerabilityDetails.cs</DependentUpon>
+    </Compile>
     <Compile Include="2_Task\TcpPortChecker.cs" />
     <Compile Include="2_Task\VulnerabilityScanner.cs" />
     <Compile Include="DataTypes\DataForVulnerabilityScanner.cs" />
     <Compile Include="DataTypes\Enumerations\EnumExposedDataType.cs" />
-    <Compile Include="DataTypes\DGV\FoundVulnerabilitiesRecord.cs" />
     <Compile Include="DataTypes\Enumerations\EnumRequestTriggerSource.cs" />
     <Compile Include="2_Task\AnalyzeServerHandler.cs" />
     <Compile Include="2_Task\CrawlerHandler.cs" />
@@ -122,9 +136,8 @@
     <Compile Include="DataTypes\Interfaces\IObserverHostChain.cs" />
     <Compile Include="DataTypes\Interfaces\IObserverCrawler.cs" />
     <Compile Include="2_Task\HttpRequestHandler.cs" />
-    <Compile Include="DataTypes\DGV\RefererRecord.cs" />
+    <Compile Include="DataTypes\Dgv\RefererRecord.cs" />
     <Compile Include="DataTypes\Interfaces\IVulnerabilityDefinition.cs" />
-    <Compile Include="DataTypes\VulnerabilityDefinition.cs" />
     <Compile Include="DataTypes\Enumerations\EnumVulnerability.cs" />
     <Compile Include="DataTypes\VulnerableElementAndConsequences.cs" />
     <Compile Include="Program.cs" />
@@ -140,6 +153,9 @@
     <Compile Include="Vulnerabilities\VulnerabilityCatalog.cs" />
     <EmbeddedResource Include="1_Presentation\Elk_Main.resx">
       <DependentUpon>Elk_Main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="1_Presentation\VulnerabilityDetails.resx">
+      <DependentUpon>VulnerabilityDetails.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -1,4 +1,4 @@
-﻿namespace Elk.DataTypes.DGV
+﻿namespace Elk.DataTypes.Dgv
 {
   using System.ComponentModel;
 

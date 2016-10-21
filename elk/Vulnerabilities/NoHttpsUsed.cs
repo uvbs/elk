@@ -13,7 +13,7 @@
 
     private string title = "Https not used by server";
     private string description = "The target server supports HTTPS but does not use/redirect to it.";
-    private string concequences = "All sensitive user and header data is transferred in clear text and can be intercepted.";
+    private string consequences = "All sensitive user and header data is transferred in clear text and can be intercepted.";
     private string setup = "MITM, Sniffer";
     private List<VulnerableElementAndConsequences> vulnElementAndConsequences = new List<VulnerableElementAndConsequences>();
 
@@ -26,7 +26,7 @@
 
     public string Description { get { return this.description; } }
 
-    public string Concequences { get { return this.concequences; } }
+    public string Consequences { get { return this.consequences; } }
 
     public string Setup { get { return this.setup; } }
 

@@ -13,7 +13,7 @@
 
     private string title = "Https used by \"Permanent redirects\" (301, 308)";
     private string description = "The server connection can't be attacked except by client vulnerabilities.";
-    private string concequences = "-";
+    private string consequences = "-";
     private string setup = "-";
     private List<VulnerableElementAndConsequences> vulnElementAndConsequences = new List<VulnerableElementAndConsequences>();
 
@@ -26,7 +26,7 @@
 
     public string Description { get { return this.description; } }
 
-    public string Concequences { get { return this.concequences; } }
+    public string Consequences { get { return this.consequences; } }
 
     public string Setup { get { return this.setup; } }
 
