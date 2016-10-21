@@ -86,6 +86,7 @@
       this.tb_DestinationUrl.Name = "tb_DestinationUrl";
       this.tb_DestinationUrl.Size = new System.Drawing.Size(310, 20);
       this.tb_DestinationUrl.TabIndex = 0;
+      this.tb_DestinationUrl.Text = "ruben.zhdk.ch";
       this.tb_DestinationUrl.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tb_DestinationUrl_KeyDown);
       // 
       // label1

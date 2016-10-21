@@ -33,8 +33,8 @@
         this.l_HostChainValue.Text = "Running";
         this.bgw_HostChain.RunWorkerAsync();
 
-        this.l_CrawlerValue.Text = "Running";
-        this.bgw_Crawler.RunWorkerAsync();
+        //this.l_CrawlerValue.Text = "Running";
+        //this.bgw_Crawler.RunWorkerAsync();
       }
       else
       {
@@ -79,6 +79,9 @@
         this.tb_Cookies.Text = entity.CookiesString;
         this.tb_RawHeaders.Text = entity.RawHeaders;
         this.tb_Server.Text = entity.Server;
+
+        this.cb_Http.Checked = entity.HttpPortOpen;
+        this.cb_Https.Checked = entity.HttpsPortOpen;
       }
     }
 
@@ -101,59 +104,26 @@
       this.SetButtonToStart();
     }
 
+
     private void bgw_HostChain_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
     {
-      // Port scan
-      string getRequest = "GET / HTTP.1.1\n\n";
       try
       {
-        bool httpPortOpen = this.portScanner.IsPortOpen(this.tb_DestinationUrl.Text, 80, getRequest);
-        this.SetCheckboxStatus(this.cb_Http, httpPortOpen);
+        string url = string.Format("http://{0}", this.tb_DestinationUrl.Text);
+        this.analyzeServerHandler.DetermineHostsChain(url);
       }
-      catch (Exception)
+      catch (Exception ex)
       {
+        this.bgw_HostChain.CancelAsync();
+        MessageBox.Show(string.Format("Exception: {0}", ex.Message));
       }
 
-      if (this.bgw_Crawler.CancellationPending)
-      {
-        return;
-      }
-
-      try
-      {
-        bool httpsPortOpen = this.portScanner.IsPortOpen(this.tb_DestinationUrl.Text, 443, getRequest);
-        this.SetCheckboxStatus(this.cb_Https, httpsPortOpen);
-      }
-      catch (Exception)
-      {
-      }
-
-
-      if (this.bgw_Crawler.CancellationPending)
-      {
-        return;
-      }
-
-      if (this.cb_Http.Checked)
-      {
-        // Determine hosts chain
-        try
-        {
-          string url = string.Format("http://{0}", this.tb_DestinationUrl.Text);
-          this.analyzeServerHandler.DetermineHostsChain(url);
-        }
-        catch (Exception ex)
-        {
-          this.bgw_HostChain.CancelAsync();
-          MessageBox.Show(string.Format("Exception: {0}", ex.Message));
-        }
-
-        // Determine vulnerabilities
-        DataForVulnerabilityScanner data = new DataForVulnerabilityScanner(this.responseEntityChain, this.cb_Http.Checked, this.cb_Https.Checked);
-        List<IVulnerabilityDefinition> foundVulns = this.vulnHandler.StartScanning(data);
-        this.UpdateVulnerabilitiesDgv(foundVulns);
-      }
+      // Determine vulnerabilities
+      DataForVulnerabilityScanner data = new DataForVulnerabilityScanner(this.responseEntityChain);
+      List<IVulnerabilityDefinition> foundVulns = this.vulnHandler.StartScanning(data);
+      this.UpdateVulnerabilitiesDgv(foundVulns);
     }
+
 
     private delegate void UpdateVulnerabilitiesDgvDelegate(List<IVulnerabilityDefinition> foundVulns);
     private void UpdateVulnerabilitiesDgv(List<IVulnerabilityDefinition> foundVulns)
@@ -178,7 +148,34 @@
       this.l_HostChainValue.Text = "Done";
       this.SetButtonToStart();
     }
+    
 
+    private void dgv_Vulnerabilities_MouseDoubleClick(object sender, MouseEventArgs e)
+    {
+      if (e.Button != MouseButtons.Left)
+      {
+        return;
+      }
+
+      try
+      {
+        DataGridView.HitTestInfo hti = this.dgv_Vulnerabilities.HitTest(e.X, e.Y);
+        if (hti.RowIndex >= 0)
+        {
+          string title = this.dgv_Vulnerabilities.Rows[hti.RowIndex].Cells[this.dgv_Vulnerabilities.Columns["Title"].Index].Value.ToString();
+          string description = this.dgv_Vulnerabilities.Rows[hti.RowIndex].Cells[this.dgv_Vulnerabilities.Columns["Description"].Index].Value.ToString();
+          string concequences = this.dgv_Vulnerabilities.Rows[hti.RowIndex].Cells[this.dgv_Vulnerabilities.Columns["Consequences"].Index].Value.ToString();
+          string setup = this.dgv_Vulnerabilities.Rows[hti.RowIndex].Cells[this.dgv_Vulnerabilities.Columns["Setup"].Index].Value.ToString();
+
+          Form_VulnerabilityDetails vulnerabilityDetails = new Form_VulnerabilityDetails(title, description, concequences, setup);
+          vulnerabilityDetails.ShowDialog();
+        }
+      }
+      catch (Exception ex)
+      {
+        MessageBox.Show(string.Format("Exception occurred: {0}", ex.Message));
+      }
+    }
     #endregion
 
   }

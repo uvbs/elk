@@ -53,7 +53,7 @@
     public bool IsTargetVulnerable(DataForVulnerabilityScanner scannerData)
     {
       bool isVulnerable = false;
-
+      
 
       return isVulnerable;
     }

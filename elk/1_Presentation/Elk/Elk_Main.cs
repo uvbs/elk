@@ -20,7 +20,7 @@
     private CrawlerHandler crawlerHandler;
     private BindingList<RefererRecord> referers;
     private BindingList<IVulnerabilityDefinition> foundVulnerabilities;
-    private TcpPortChecker portScanner;
+
     private VulnerabilityScanner vulnHandler;
 
     #endregion
@@ -40,7 +40,6 @@
       this.responseEntityChain = new List<ServerResponseEntity>();
       this.crawlerHandler = new CrawlerHandler();
       this.analyzeServerHandler = new AnalyzeServerHandler();
-      this.portScanner = new TcpPortChecker();
       this.vulnHandler = new VulnerabilityScanner();
 
       // Register at observables
@@ -48,30 +47,11 @@
       this.crawlerHandler.AddObserverReferer(this);
       this.analyzeServerHandler.AddObserverHostChain(this);
 
-
       System.Threading.Tasks.Task.Factory.StartNew(() =>
       {
         while (true)
         {
-          System.Threading.Thread.Sleep(2000);
-          this.Task_RefererProcessor1();
-        }
-      });
-
-      System.Threading.Tasks.Task.Factory.StartNew(() =>
-      {
-        while (true)
-        {
-          System.Threading.Thread.Sleep(2000);
-          this.Task_RefererProcessor2();
-        }
-      });
-
-      System.Threading.Tasks.Task.Factory.StartNew(() =>
-      {
-        while (true)
-        {
-          System.Threading.Thread.Sleep(2000);
+          System.Threading.Thread.Sleep(200);
           this.Task_CrawlerProcessor();
         }
       });
@@ -128,73 +108,6 @@
 
 
     #region BACKGROUNDWORKERS
-
-
-    private delegate void Task_RefererProcessorDelegate();
-    private void Task_RefererProcessor1()
-    {
-      List<Tuple<string, string>> tmpRefererBatch;
-      List<RefererRecord> newRefererRecords = new List<RefererRecord>();
-      lock (this.refererBatch)
-      {
-        tmpRefererBatch = new List<Tuple<string, string>>(this.refererBatch);
-        this.refererBatch.Clear();
-      }
-
-      foreach (Tuple<string, string> tmpRecord in tmpRefererBatch)
-      {
-        string chain = string.Empty;
-        string entryHostName = tmpRecord.Item1;
-        string cookies = tmpRecord.Item2;
-        try
-        {
-          AnalyzeServerHandler serverAnalyzer = new AnalyzeServerHandler();
-          string tmpUrl = string.Format("http://{0}/", entryHostName);
-          List<ServerResponseEntity> hostChain = serverAnalyzer.DetermineHostsChain(tmpUrl);
-          hostChain.ForEach(elem => chain += string.Format("{0}://{1}, ", elem.RequestedScheme, elem.RequestedHost));
-          //chain = chain.TrimEnd(new char[] { ' ', ',' });
-          cookies = hostChain[hostChain.Count - 1].CookiesString;
-        }
-        catch (Exception ex)
-        {
-          cookies = string.Format("Error occurred: {0}", ex.Message);
-        }
-        RefererRecord tmpRefererRecord = new RefererRecord(entryHostName, chain, cookies);
-        lock (this.refererRecordBatch)
-        {
-          this.refererRecordBatch.Add(tmpRefererRecord);
-        }
-      }
-    }
-
-
-    List<RefererRecord> refererRecordBatch = new List<RefererRecord>();
-    private delegate void Task_RefererProcessor2Delegate();
-    private void Task_RefererProcessor2()
-    {
-      if (this.InvokeRequired)
-      {
-        this.BeginInvoke(new Task_RefererProcessor2Delegate(this.Task_RefererProcessor2), new object[] { });
-        return;
-      }
-      List<RefererRecord> tmpRefererRecordBatch;
-
-      lock (this.refererRecordBatch)
-      {
-        tmpRefererRecordBatch = new List<RefererRecord>(this.refererRecordBatch);
-        this.refererRecordBatch.Clear();
-      }
-
-      this.BeginInvoke((MethodInvoker)delegate ()
-      {
-        foreach (RefererRecord tmpRecord in tmpRefererRecordBatch)
-        {
-          this.referers.Add(tmpRecord);
-        }
-      });
-    }
-
-
 
     private List<string> crawlerLogBatch = new List<string>();
     private delegate void Task_CrawlerProcessorDelegate();
@@ -292,32 +205,5 @@
 
     #endregion
 
-
-    private void dgv_Vulnerabilities_MouseDoubleClick(object sender, MouseEventArgs e)
-    {
-      if (e.Button != MouseButtons.Left)
-      {
-        return;
-      }
-
-      try
-      {
-        DataGridView.HitTestInfo hti = this.dgv_Vulnerabilities.HitTest(e.X, e.Y);
-        if (hti.RowIndex >= 0)
-        {
-          string title = this.dgv_Vulnerabilities.Rows[hti.RowIndex].Cells[this.dgv_Vulnerabilities.Columns["Title"].Index].Value.ToString();
-          string description = this.dgv_Vulnerabilities.Rows[hti.RowIndex].Cells[this.dgv_Vulnerabilities.Columns["Description"].Index].Value.ToString();
-          string concequences = this.dgv_Vulnerabilities.Rows[hti.RowIndex].Cells[this.dgv_Vulnerabilities.Columns["Consequences"].Index].Value.ToString();
-          string setup = this.dgv_Vulnerabilities.Rows[hti.RowIndex].Cells[this.dgv_Vulnerabilities.Columns["Setup"].Index].Value.ToString();
-          
-          Form_VulnerabilityDetails vulnerabilityDetails = new Form_VulnerabilityDetails(title, description, concequences, setup);
-          vulnerabilityDetails.ShowDialog();
-        }
-      }
-      catch (Exception ex)
-      {
-        MessageBox.Show(string.Format("Exception occurred: {0}", ex.Message));
-      }
-    }
   }
 }

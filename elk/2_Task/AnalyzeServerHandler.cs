@@ -16,6 +16,7 @@
     private List<ServerResponseEntity> responseEntityChain;
     private List<IObserverHostChain> observersHostChain;
     private Dictionary<string, ServerResponseEntity> entityCache;
+    private TcpPortChecker portScanner;
 
     #endregion
 
@@ -28,6 +29,7 @@
       this.responseEntityChain = new List<ServerResponseEntity>();
       this.observersHostChain = new List<IObserverHostChain>();
       this.entityCache = new Dictionary<string, ServerResponseEntity>();
+      this.portScanner = new TcpPortChecker();
     }
 
 
@@ -60,10 +62,18 @@
         }
         else
         {
+          Uri uri = new Uri(requestedUri);
+
+          // Verify if http(s) port is open
+          bool httpPortOpen = this.portScanner.IsPortOpen(uri.Host, 80);
+          bool httpsPortOpen = this.portScanner.IsPortOpen(uri.Host, 443);
+          
+          // Send web request to server
           webResponse = this.requestHandler.SendGETRequest(requestedUri, string.Empty, string.Empty, false);
 
-          Uri uri = new Uri(requestedUri);
           response = this.ProcessServerResponse(uri.Scheme, uri.Host, uri.PathAndQuery, webResponse);
+          response.HttpPortOpen = httpPortOpen;
+          response.HttpsPortOpen = httpsPortOpen;
         }
 
         this.responseEntityChain.Add(response);
