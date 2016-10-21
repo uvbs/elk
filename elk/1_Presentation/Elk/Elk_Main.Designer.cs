@@ -70,6 +70,8 @@
       this.tp_ServerVulnerabilities = new System.Windows.Forms.TabPage();
       this.dgv_Vulnerabilities = new System.Windows.Forms.DataGridView();
       this.tp_ExternalBackRedirect = new System.Windows.Forms.TabPage();
+      this.tb_IpAddress = new System.Windows.Forms.TextBox();
+      this.l_IpAddress = new System.Windows.Forms.Label();
       this.tp_PageLinksTo.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.dgv_references)).BeginInit();
       this.tp_Crawler.SuspendLayout();
@@ -271,6 +273,8 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
       this.gb_RequestResults.BackColor = System.Drawing.Color.WhiteSmoke;
+      this.gb_RequestResults.Controls.Add(this.tb_IpAddress);
+      this.gb_RequestResults.Controls.Add(this.l_IpAddress);
       this.gb_RequestResults.Controls.Add(this.cb_Https);
       this.gb_RequestResults.Controls.Add(this.cb_Http);
       this.gb_RequestResults.Controls.Add(this.l_OpenPorts);
@@ -300,7 +304,7 @@
       // 
       this.cb_Https.AutoSize = true;
       this.cb_Https.Enabled = false;
-      this.cb_Https.Location = new System.Drawing.Point(257, 28);
+      this.cb_Https.Location = new System.Drawing.Point(257, 44);
       this.cb_Https.Name = "cb_Https";
       this.cb_Https.Size = new System.Drawing.Size(85, 17);
       this.cb_Https.TabIndex = 18;
@@ -311,7 +315,7 @@
       // 
       this.cb_Http.AutoSize = true;
       this.cb_Http.Enabled = false;
-      this.cb_Http.Location = new System.Drawing.Point(161, 29);
+      this.cb_Http.Location = new System.Drawing.Point(161, 45);
       this.cb_Http.Name = "cb_Http";
       this.cb_Http.Size = new System.Drawing.Size(72, 17);
       this.cb_Http.TabIndex = 17;
@@ -322,7 +326,7 @@
       // 
       this.l_OpenPorts.AutoSize = true;
       this.l_OpenPorts.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.l_OpenPorts.Location = new System.Drawing.Point(22, 29);
+      this.l_OpenPorts.Location = new System.Drawing.Point(22, 45);
       this.l_OpenPorts.Name = "l_OpenPorts";
       this.l_OpenPorts.Size = new System.Drawing.Size(69, 13);
       this.l_OpenPorts.TabIndex = 16;
@@ -332,7 +336,7 @@
       // 
       this.tb_Server.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-      this.tb_Server.Location = new System.Drawing.Point(161, 54);
+      this.tb_Server.Location = new System.Drawing.Point(161, 70);
       this.tb_Server.Name = "tb_Server";
       this.tb_Server.Size = new System.Drawing.Size(601, 20);
       this.tb_Server.TabIndex = 15;
@@ -341,7 +345,7 @@
       // 
       this.l_Server.AutoSize = true;
       this.l_Server.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.l_Server.Location = new System.Drawing.Point(22, 57);
+      this.l_Server.Location = new System.Drawing.Point(22, 73);
       this.l_Server.Name = "l_Server";
       this.l_Server.Size = new System.Drawing.Size(44, 13);
       this.l_Server.TabIndex = 14;
@@ -351,7 +355,7 @@
       // 
       this.tb_Hpkp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-      this.tb_Hpkp.Location = new System.Drawing.Point(161, 168);
+      this.tb_Hpkp.Location = new System.Drawing.Point(161, 184);
       this.tb_Hpkp.Name = "tb_Hpkp";
       this.tb_Hpkp.Size = new System.Drawing.Size(601, 20);
       this.tb_Hpkp.TabIndex = 13;
@@ -360,7 +364,7 @@
       // 
       this.tb_RedirectToHttps.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-      this.tb_RedirectToHttps.Location = new System.Drawing.Point(161, 111);
+      this.tb_RedirectToHttps.Location = new System.Drawing.Point(161, 127);
       this.tb_RedirectToHttps.Name = "tb_RedirectToHttps";
       this.tb_RedirectToHttps.Size = new System.Drawing.Size(601, 20);
       this.tb_RedirectToHttps.TabIndex = 12;
@@ -369,7 +373,7 @@
       // 
       this.tb_Hsts.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-      this.tb_Hsts.Location = new System.Drawing.Point(161, 139);
+      this.tb_Hsts.Location = new System.Drawing.Point(161, 155);
       this.tb_Hsts.Name = "tb_Hsts";
       this.tb_Hsts.Size = new System.Drawing.Size(601, 20);
       this.tb_Hsts.TabIndex = 11;
@@ -379,18 +383,18 @@
       this.tb_RawHeaders.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-      this.tb_RawHeaders.Location = new System.Drawing.Point(161, 255);
+      this.tb_RawHeaders.Location = new System.Drawing.Point(161, 271);
       this.tb_RawHeaders.Multiline = true;
       this.tb_RawHeaders.Name = "tb_RawHeaders";
       this.tb_RawHeaders.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-      this.tb_RawHeaders.Size = new System.Drawing.Size(601, 224);
+      this.tb_RawHeaders.Size = new System.Drawing.Size(601, 211);
       this.tb_RawHeaders.TabIndex = 10;
       // 
       // l_RawHeaders
       // 
       this.l_RawHeaders.AutoSize = true;
       this.l_RawHeaders.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.l_RawHeaders.Location = new System.Drawing.Point(22, 258);
+      this.l_RawHeaders.Location = new System.Drawing.Point(22, 274);
       this.l_RawHeaders.Name = "l_RawHeaders";
       this.l_RawHeaders.Size = new System.Drawing.Size(81, 13);
       this.l_RawHeaders.TabIndex = 9;
@@ -400,7 +404,7 @@
       // 
       this.tb_ResponseStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-      this.tb_ResponseStatus.Location = new System.Drawing.Point(161, 83);
+      this.tb_ResponseStatus.Location = new System.Drawing.Point(161, 99);
       this.tb_ResponseStatus.Name = "tb_ResponseStatus";
       this.tb_ResponseStatus.Size = new System.Drawing.Size(601, 20);
       this.tb_ResponseStatus.TabIndex = 8;
@@ -409,7 +413,7 @@
       // 
       this.tb_Cookies.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-      this.tb_Cookies.Location = new System.Drawing.Point(161, 197);
+      this.tb_Cookies.Location = new System.Drawing.Point(161, 213);
       this.tb_Cookies.Name = "tb_Cookies";
       this.tb_Cookies.Size = new System.Drawing.Size(601, 20);
       this.tb_Cookies.TabIndex = 7;
@@ -418,7 +422,7 @@
       // 
       this.tb_Location.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-      this.tb_Location.Location = new System.Drawing.Point(161, 226);
+      this.tb_Location.Location = new System.Drawing.Point(161, 242);
       this.tb_Location.Name = "tb_Location";
       this.tb_Location.Size = new System.Drawing.Size(601, 20);
       this.tb_Location.TabIndex = 6;
@@ -427,7 +431,7 @@
       // 
       this.l_Location.AutoSize = true;
       this.l_Location.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.l_Location.Location = new System.Drawing.Point(22, 229);
+      this.l_Location.Location = new System.Drawing.Point(22, 245);
       this.l_Location.Name = "l_Location";
       this.l_Location.Size = new System.Drawing.Size(56, 13);
       this.l_Location.TabIndex = 5;
@@ -437,7 +441,7 @@
       // 
       this.l_Cookies.AutoSize = true;
       this.l_Cookies.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.l_Cookies.Location = new System.Drawing.Point(22, 200);
+      this.l_Cookies.Location = new System.Drawing.Point(22, 216);
       this.l_Cookies.Name = "l_Cookies";
       this.l_Cookies.Size = new System.Drawing.Size(52, 13);
       this.l_Cookies.TabIndex = 4;
@@ -447,7 +451,7 @@
       // 
       this.l_RedirectToHttps.AutoSize = true;
       this.l_RedirectToHttps.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.l_RedirectToHttps.Location = new System.Drawing.Point(22, 118);
+      this.l_RedirectToHttps.Location = new System.Drawing.Point(22, 134);
       this.l_RedirectToHttps.Name = "l_RedirectToHttps";
       this.l_RedirectToHttps.Size = new System.Drawing.Size(115, 13);
       this.l_RedirectToHttps.TabIndex = 3;
@@ -457,7 +461,7 @@
       // 
       this.l_Hpkp.AutoSize = true;
       this.l_Hpkp.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.l_Hpkp.Location = new System.Drawing.Point(22, 173);
+      this.l_Hpkp.Location = new System.Drawing.Point(22, 189);
       this.l_Hpkp.Name = "l_Hpkp";
       this.l_Hpkp.Size = new System.Drawing.Size(40, 13);
       this.l_Hpkp.TabIndex = 2;
@@ -467,7 +471,7 @@
       // 
       this.l_Hsts.AutoSize = true;
       this.l_Hsts.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.l_Hsts.Location = new System.Drawing.Point(22, 146);
+      this.l_Hsts.Location = new System.Drawing.Point(22, 162);
       this.l_Hsts.Name = "l_Hsts";
       this.l_Hsts.Size = new System.Drawing.Size(40, 13);
       this.l_Hsts.TabIndex = 1;
@@ -477,7 +481,7 @@
       // 
       this.l_ResponseStatus.AutoSize = true;
       this.l_ResponseStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.l_ResponseStatus.Location = new System.Drawing.Point(22, 86);
+      this.l_ResponseStatus.Location = new System.Drawing.Point(22, 102);
       this.l_ResponseStatus.Name = "l_ResponseStatus";
       this.l_ResponseStatus.Size = new System.Drawing.Size(101, 13);
       this.l_ResponseStatus.TabIndex = 0;
@@ -532,6 +536,25 @@
       this.tp_ExternalBackRedirect.TabIndex = 7;
       this.tp_ExternalBackRedirect.Text = "External back redirect";
       this.tp_ExternalBackRedirect.UseVisualStyleBackColor = true;
+      // 
+      // tb_IpAddress
+      // 
+      this.tb_IpAddress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.tb_IpAddress.Location = new System.Drawing.Point(161, 19);
+      this.tb_IpAddress.Name = "tb_IpAddress";
+      this.tb_IpAddress.Size = new System.Drawing.Size(601, 20);
+      this.tb_IpAddress.TabIndex = 20;
+      // 
+      // l_IpAddress
+      // 
+      this.l_IpAddress.AutoSize = true;
+      this.l_IpAddress.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.l_IpAddress.Location = new System.Drawing.Point(22, 22);
+      this.l_IpAddress.Name = "l_IpAddress";
+      this.l_IpAddress.Size = new System.Drawing.Size(67, 13);
+      this.l_IpAddress.TabIndex = 19;
+      this.l_IpAddress.Text = "IP address";
       // 
       // Elk_Main
       // 
@@ -609,6 +632,8 @@
     private System.Windows.Forms.CheckBox cb_Http;
     private System.Windows.Forms.Label l_OpenPorts;
     private System.Windows.Forms.TabPage tp_ExternalBackRedirect;
+    private System.Windows.Forms.TextBox tb_IpAddress;
+    private System.Windows.Forms.Label l_IpAddress;
   }
 }
 

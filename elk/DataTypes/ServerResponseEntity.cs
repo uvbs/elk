@@ -19,6 +19,7 @@
     private string redirectLocation;
     private CookieCollection cookies;
     private string server;
+    private string ipAddresses;
     private bool httpPortOpen;
     private bool httpsPortOpen;
 
@@ -72,7 +73,9 @@
     public bool HttpPortOpen { get { return this.httpPortOpen; } set { this.httpPortOpen = value; } }
 
     public bool HttpsPortOpen { get { return this.httpsPortOpen; } set { this.httpsPortOpen = value; } }
-
+    
+    public string IpAddresses { get { return this.ipAddresses; } set { this.ipAddresses = value; } }
+    
     #endregion
 
 

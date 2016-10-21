@@ -79,7 +79,7 @@
         this.tb_Cookies.Text = entity.CookiesString;
         this.tb_RawHeaders.Text = entity.RawHeaders;
         this.tb_Server.Text = entity.Server;
-
+        this.tb_IpAddress.Text = entity.IpAddresses;
         this.cb_Http.Checked = entity.HttpPortOpen;
         this.cb_Https.Checked = entity.HttpsPortOpen;
       }

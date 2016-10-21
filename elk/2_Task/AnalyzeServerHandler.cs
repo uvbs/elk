@@ -64,9 +64,13 @@
         {
           Uri uri = new Uri(requestedUri);
 
+          // Determine IP address
+          string ipAddresses = this.GetIpAddresse(uri.Host);
+
           // Verify if http(s) port is open
           bool httpPortOpen = this.portScanner.IsPortOpen(uri.Host, 80);
           bool httpsPortOpen = this.portScanner.IsPortOpen(uri.Host, 443);
+
           
           // Send web request to server
           webResponse = this.requestHandler.SendGETRequest(requestedUri, string.Empty, string.Empty, false);
@@ -74,6 +78,7 @@
           response = this.ProcessServerResponse(uri.Scheme, uri.Host, uri.PathAndQuery, webResponse);
           response.HttpPortOpen = httpPortOpen;
           response.HttpsPortOpen = httpsPortOpen;
+          response.IpAddresses = ipAddresses;
         }
 
         this.responseEntityChain.Add(response);
@@ -161,6 +166,29 @@
 
       this.entityCache.Add(cacheKey, serverResponse);
       return serverResponse;
+    }
+
+
+    private string GetIpAddresse(string hostName)
+    {
+      string ipAddresses = string.Empty;
+
+      try
+      {
+        IPHostEntry hostEntry = Dns.GetHostEntry(hostName);
+
+        foreach (var elem in hostEntry.AddressList)
+        {
+          ipAddresses += string.Format("{0}, ", elem);
+        }
+
+        ipAddresses = ipAddresses.TrimEnd(new char[] { ',', ' ' });
+      }
+      catch (Exception)
+      {
+      }
+
+      return ipAddresses;
     }
 
     #endregion
