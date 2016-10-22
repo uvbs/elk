@@ -54,6 +54,20 @@
     {
       bool isVulnerable = false;
 
+      if (scannerData == null || 
+          scannerData.ResponseEntityChain == null || 
+          scannerData.ResponseEntityChain.Count <= 0)
+      {
+        return isVulnerable;
+      }
+
+      var lastItem = scannerData.ResponseEntityChain[scannerData.ResponseEntityChain.Count - 1];
+      if (lastItem.HttpPortOpen == true && 
+          lastItem.HttpsPortOpen == false &&
+          lastItem.RequestedScheme.ToLower() == "http")
+      {
+        isVulnerable = true;
+      }
 
       return isVulnerable;
     }

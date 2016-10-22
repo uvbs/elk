@@ -173,6 +173,8 @@
         return;
       }
 
+
+      // Manage TreeView
       foreach (ServerResponseEntity tmpElem in this.responseEntityChain)
       {
         string key = string.Format("{0}", tmpElem.RequestedUrl);
@@ -180,6 +182,11 @@
       }
 
       this.tv_ResponseEntities.SelectedNode = this.tv_ResponseEntities.Nodes[0];
+
+      // Manage DataGridView
+      DataForVulnerabilityScanner data = new DataForVulnerabilityScanner(this.responseEntityChain);
+      List<IVulnerabilityDefinition> foundVulns = this.vulnHandler.StartScanning(data);
+      this.UpdateVulnerabilitiesDgv(foundVulns);
     }
 
     #endregion

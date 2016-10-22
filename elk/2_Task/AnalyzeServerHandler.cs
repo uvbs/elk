@@ -132,6 +132,7 @@
       serverResponse.RequestedHost = requestedHost;
       serverResponse.RequestedPath = requestedPath;
       serverResponse.ResponseStatus = string.Format("{0,4}  {1}", (int)webResponse.StatusCode, webResponse.StatusDescription);
+      serverResponse.ResponseStatusCode = (int)webResponse.StatusCode;
       serverResponse.RawHeaders = rawHeaders;
 
       if (headers.ContainsKey("server"))

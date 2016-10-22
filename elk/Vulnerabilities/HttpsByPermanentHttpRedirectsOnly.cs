@@ -6,14 +6,13 @@
   using System.Collections.Generic;
 
 
-  public class HttpsByHstsAndSubdomains : IVulnerabilityDefinition
+  public class HttpsByPermanentHttpRedirectsOnly : IVulnerabilityDefinition
   {
 
     #region MEMBERS
 
-    private string title = "Chain elements and their sub-domains to target protected by HSTS";
-    private string description = "The whole system chain including all subdomains to the target system is protected by HSTS and cannot be intercepted because client requests to any element of the chain will start with HTTPS by default. " +
-                                 "Therefore the server connection can't be attacked except by client vulnerabilities.";
+    private string title = "Https used by \"Permanent redirects\" (301, 308)";
+    private string description = "The server connection can't be attacked except by client vulnerabilities.";
     private string consequences = "-";
     private string setup = "-";
     private List<VulnerableElementAndConsequences> vulnElementAndConsequences = new List<VulnerableElementAndConsequences>();
@@ -38,7 +37,7 @@
 
     #region PUBLIC
 
-    public HttpsByHstsAndSubdomains()
+    public HttpsByPermanentHttpRedirectsOnly()
     {
       vulnElementAndConsequences.Add(new VulnerableElementAndConsequences(EnumRequestTriggerSource.None, EnumExposedDataType.None));
     }
@@ -59,15 +58,27 @@
         return isVulnerable;
       }
 
-      // Check if system chain is vulnerable
       var lastItem = scannerData.ResponseEntityChain[scannerData.ResponseEntityChain.Count - 1];
-      if (lastItem.HttpsPortOpen == true &&
-          lastItem.RequestedScheme.ToLower() == "https" &&
-          !string.IsNullOrEmpty(lastItem.Hsts) &&
-          lastItem.Hsts.ToLower().Contains("max-age=") &&
-          lastItem.Hsts.ToLower().Contains("includesubdomains "))
+      int numberOfRedirectElements = scannerData.ResponseEntityChain.Count - 1;
+      if (numberOfRedirectElements > 0)
       {
-        isVulnerable = true;
+        List<ServerResponseEntity> permanentlyRedirectedElements = new List<ServerResponseEntity>();
+        for (int i = 0; i < numberOfRedirectElements; i++)
+        {
+          if (scannerData.ResponseEntityChain[i].RequestedScheme == "http" &&
+              (scannerData.ResponseEntityChain[i].ResponseStatusCode == 301))
+          {
+            permanentlyRedirectedElements.Add(scannerData.ResponseEntityChain[i]);
+          }
+        }
+
+        // Check if system chain is vulnerable
+        if (lastItem.HttpsPortOpen == true &&
+            lastItem.RequestedScheme.ToLower() == "https" &&
+            numberOfRedirectElements == permanentlyRedirectedElements.Count)
+        {
+          isVulnerable = true;
+        }
       }
 
       return isVulnerable;

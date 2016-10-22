@@ -143,6 +143,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataTypes\ServerResponseEntity.cs" />
+    <Compile Include="Vulnerabilities\HttpsByPermanentHttpRedirectsOnly.cs" />
+    <Compile Include="Vulnerabilities\HttpsByTemporaryAndPermanentHttpRedirectsMix.cs" />
+    <Compile Include="Vulnerabilities\HttpsByTemporaryHttpRedirectsOnly.cs" />
     <Compile Include="Vulnerabilities\NoHttpsAvailable.cs" />
     <Compile Include="Vulnerabilities\HttpsByHstsAndNoSubdomains.cs" />
     <Compile Include="Vulnerabilities\HttpsByHstsAndSubdomains.cs" />

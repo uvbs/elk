@@ -13,6 +13,7 @@
     private string requestedHost;
     private string requestedPath;
     private string responseStatus;
+    private int responseStatusCode;
     private string hsts;
     private string hpkp;
     private string hpkpReport;
@@ -40,6 +41,8 @@
     
     public string ResponseStatus { get { return this.responseStatus; } set { this.responseStatus = value; } }
 
+    public int ResponseStatusCode { get { return this.responseStatusCode; } set { this.responseStatusCode = value; } }
+    
     public string Hsts { get { return this.hsts; } set { this.hsts = value; } }
 
     public string Hpkp { get { return this.hpkp; } set { this.hpkp = value; } }

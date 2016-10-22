@@ -6,15 +6,16 @@
   using System.Collections.Generic;
 
 
-  public class NoHttpsUsed : IVulnerabilityDefinition
+  public class HttpsByTemporaryHttpRedirects : IVulnerabilityDefinition
   {
 
     #region MEMBERS
 
-    private string title = "Https not used by server";
-    private string description = "The target server supports HTTPS but does not use/redirect to it.";
-    private string consequences = "All sensitive user and header data is transferred in clear text and can be intercepted.";
-    private string setup = "MITM, Sniffer";
+    private string title = "Https used by \"Temporary redirects\" (302, 307)";
+    private string description = "The server uses \"Temporary redirects\" (302, 307) to lead the user to the HTTPS server.";
+    private string consequences = "By redirecting the HTTP connection through the attackers HTTP(S) reverse proxy somewhere in the " +
+                          "plain text communication the reverse proxy server must do the final request to the HTTPS server in place of the client.";
+    private string setup = "MITM, DNS poisoning, HTTP reverse proxy, Sniffing";
     private List<VulnerableElementAndConsequences> vulnElementAndConsequences = new List<VulnerableElementAndConsequences>();
 
     #endregion
@@ -37,8 +38,8 @@
 
     #region PUBLIC
 
-    public NoHttpsUsed()
-    {      
+    public HttpsByTemporaryHttpRedirects()
+    {
       vulnElementAndConsequences.Add(new VulnerableElementAndConsequences(EnumRequestTriggerSource.ClientApplication, EnumExposedDataType.HttpHeader));
       vulnElementAndConsequences.Add(new VulnerableElementAndConsequences(EnumRequestTriggerSource.ClientApplication, EnumExposedDataType.HttpPayload));
       vulnElementAndConsequences.Add(new VulnerableElementAndConsequences(EnumRequestTriggerSource.User, EnumExposedDataType.HttpHeader));
@@ -61,13 +62,29 @@
         return isVulnerable;
       }
 
-      // Check if system chain is vulnerable
       var lastItem = scannerData.ResponseEntityChain[scannerData.ResponseEntityChain.Count - 1];
-      if (lastItem.HttpPortOpen == true && 
-          lastItem.HttpsPortOpen == true &&
-          lastItem.RequestedScheme.ToLower() == "http")
+      int numberOfRedirectElements = scannerData.ResponseEntityChain.Count - 1;
+      if (numberOfRedirectElements > 0)
       {
-        isVulnerable = true;
+        List<ServerResponseEntity> temporarilyRedirectedElements = new List<ServerResponseEntity>();
+        for (int i = 0; i < numberOfRedirectElements; i++)
+        {
+          if (scannerData.ResponseEntityChain[i].RequestedScheme == "http" &&
+              (scannerData.ResponseEntityChain[i].ResponseStatusCode == 302 ||
+               scannerData.ResponseEntityChain[i].ResponseStatusCode == 303 ||
+               scannerData.ResponseEntityChain[i].ResponseStatusCode == 307))
+          {
+            temporarilyRedirectedElements.Add(scannerData.ResponseEntityChain[i]);
+          }
+        }
+
+        // Check if system chain is vulnerable
+        if (lastItem.HttpsPortOpen == true &&
+            lastItem.RequestedScheme.ToLower() == "https" && 
+            temporarilyRedirectedElements.Count > 0)
+        {
+          isVulnerable = true;
+        }
       }
 
       return isVulnerable;

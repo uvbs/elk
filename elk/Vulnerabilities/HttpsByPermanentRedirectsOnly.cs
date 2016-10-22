@@ -51,6 +51,34 @@
     {
       bool isVulnerable = false;
 
+      if (scannerData == null ||
+          scannerData.ResponseEntityChain == null ||
+          scannerData.ResponseEntityChain.Count <= 0)
+      {
+        return isVulnerable;
+      }
+
+      var lastItem = scannerData.ResponseEntityChain[scannerData.ResponseEntityChain.Count - 1];
+      int numberOfRedirectElements = scannerData.ResponseEntityChain.Count - 1;
+      if (numberOfRedirectElements > 0)
+      {
+        List<ServerResponseEntity> permanentlyRedirectedElements = new List<ServerResponseEntity>();
+        for (int i = 0; i < numberOfRedirectElements; i++)
+        {
+          if (scannerData.ResponseEntityChain[i].ResponseStatusCode == 301)
+          {
+            permanentlyRedirectedElements.Add(scannerData.ResponseEntityChain[i]);
+          }
+        }
+
+        // Check if system chain is vulnerable
+        if (lastItem.HttpsPortOpen == true &&
+            lastItem.RequestedScheme.ToLower() == "https" &&
+            numberOfRedirectElements == permanentlyRedirectedElements.Count)
+        {
+          isVulnerable = true;
+        }
+      }
 
       return isVulnerable;
     }

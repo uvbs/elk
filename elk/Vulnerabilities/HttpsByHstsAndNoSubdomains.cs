@@ -11,7 +11,7 @@
 
     #region MEMBERS
 
-    private string title = "Target system is protected by HSTS";
+    private string title = "Target system is protected by HSTS but not sub domains";
     private string description = "The target system is protected by HSTS and cannot be intercepted because the client requests the server with HTTPS by default." +
                          "If HSTS did not set the subdomain feature the attacker can inject a redirect to a subdomain what can give him access to sensitive " +
                          "header data.";
@@ -54,10 +54,28 @@
     {
       bool isVulnerable = false;
 
+      if (scannerData == null ||
+          scannerData.ResponseEntityChain == null ||
+          scannerData.ResponseEntityChain.Count <= 0)
+      {
+        return isVulnerable;
+      }
+
+      // Check if system chain is vulnerable
+      var lastItem = scannerData.ResponseEntityChain[scannerData.ResponseEntityChain.Count - 1];
+      if (lastItem.HttpsPortOpen == true &&
+          lastItem.RequestedScheme.ToLower() == "https" &&
+          !string.IsNullOrEmpty(lastItem.Hsts) &&
+          lastItem.Hsts.ToLower().Contains("max-age=") &&
+          !lastItem.Hsts.ToLower().Contains("includesubdomains "))
+      {
+        isVulnerable = true;
+      }
 
       return isVulnerable;
     }
 
     #endregion
+
   }
 }

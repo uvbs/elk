@@ -119,9 +119,9 @@
       }
 
       // Determine vulnerabilities
-      DataForVulnerabilityScanner data = new DataForVulnerabilityScanner(this.responseEntityChain);
-      List<IVulnerabilityDefinition> foundVulns = this.vulnHandler.StartScanning(data);
-      this.UpdateVulnerabilitiesDgv(foundVulns);
+        //DataForVulnerabilityScanner data = new DataForVulnerabilityScanner(this.responseEntityChain);
+        //List<IVulnerabilityDefinition> foundVulns = this.vulnHandler.StartScanning(data);
+        //this.UpdateVulnerabilitiesDgv(foundVulns);
     }
 
 
