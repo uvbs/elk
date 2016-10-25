@@ -22,32 +22,28 @@
 
       if (this.bt_StartStop.Text == "Start")
       {
-        this.referers.Clear();
+        this.DisableGuiElements();
 
-        this.cb_Http.Checked = false;
-        this.cb_Https.Checked = false;
-
-        this.tb_CrawlerLog.Text = string.Empty;
-        this.bt_StartStop.Text = "Stop";
-
-        this.l_HostChainValue.Text = "Running";
         this.bgw_HostChain.RunWorkerAsync();
 
-        //this.l_CrawlerValue.Text = "Running";
         //this.bgw_Crawler.RunWorkerAsync();
       }
       else
       {
-        this.bt_StartStop.Text = "Start";
-
+        this.EnableGuiElements();
+        
         if (this.bgw_Crawler.IsBusy)
         {
+          this.bt_StartStop.Text = "Stopping ...";
+          this.bt_StartStop.Enabled = false;
           this.crawlerHandler.Cancel();
           this.bgw_Crawler.CancelAsync();
         }
 
         if (this.bgw_HostChain.IsBusy)
         {
+          this.bt_StartStop.Text = "Stopping ...";
+          this.bt_StartStop.Enabled = false;
           this.bgw_HostChain.CancelAsync();
         }
       }
@@ -119,9 +115,9 @@
       }
 
       // Determine vulnerabilities
-        //DataForVulnerabilityScanner data = new DataForVulnerabilityScanner(this.responseEntityChain);
-        //List<IVulnerabilityDefinition> foundVulns = this.vulnHandler.StartScanning(data);
-        //this.UpdateVulnerabilitiesDgv(foundVulns);
+      //DataForVulnerabilityScanner data = new DataForVulnerabilityScanner(this.responseEntityChain);
+      //List<IVulnerabilityDefinition> foundVulns = this.vulnHandler.StartScanning(data);
+      //this.UpdateVulnerabilitiesDgv(foundVulns);
     }
 
 
@@ -176,6 +172,37 @@
         MessageBox.Show(string.Format("Exception occurred: {0}", ex.Message));
       }
     }
+
+    #endregion
+
+
+    #region PRIVATE
+
+    private void EnableGuiElements()
+    {
+//      this.bt_StartStop.Text = "Start";
+      this.tb_DestinationUrl.Enabled = true;
+
+//      this.l_HostChainValue.Text = "Done";
+//      this.l_CrawlerValue.Text = "Done";
+    }
+
+    private void DisableGuiElements()
+    {
+      this.referers.Clear();
+
+      this.cb_Http.Checked = false;
+      this.cb_Https.Checked = false;
+
+      this.tb_CrawlerLog.Text = string.Empty;
+      this.bt_StartStop.Text = "Stop";
+
+      this.l_HostChainValue.Text = "Running";
+      //this.l_CrawlerValue.Text = "Running";
+
+      this.tb_DestinationUrl.Enabled = false;
+    }
+
     #endregion
 
   }

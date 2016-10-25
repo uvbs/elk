@@ -68,6 +68,8 @@
     {
       if (!this.bgw_Crawler.IsBusy && !this.bgw_HostChain.IsBusy)
       {
+        this.tb_DestinationUrl.Enabled = true;
+        this.bt_StartStop.Enabled = true;
         this.bt_StartStop.Text = "Start";
       }
     }
@@ -104,6 +106,7 @@
 
       targetCheckBox.Checked = isEnabled;
     }
+
     #endregion
 
 

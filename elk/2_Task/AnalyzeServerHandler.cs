@@ -50,9 +50,9 @@
           tmpUri = new Uri(requestedUri);
           requestedUri = tmpUri.AbsoluteUri;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-          throw new Exception("The URL is invalid");
+          throw new Exception(string.Format("The URL is invalid: {0}", ex.Message));
         }
 
         redirected = false;
@@ -86,6 +86,11 @@
         // Initialize values for next round
         if (response != null && !string.IsNullOrEmpty(response.RedirectLocation))
         {
+          if (!response.RedirectLocation.StartsWith("http"))
+          {
+            response.RedirectLocation = string.Format("{0}://{1}{2}", response.RequestedScheme, response.RequestedHost, response.RedirectLocation);
+          }
+
           requestedUri = response.RedirectLocation;
           redirected = true;
           webResponse = null;
