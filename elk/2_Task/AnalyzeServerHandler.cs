@@ -33,7 +33,7 @@
     }
 
 
-    public List<ServerResponseEntity> DetermineHostsChain(string requestedUri)
+    public List<ServerResponseEntity> DetermineHostsChain(string requestedUri, string userAgent)
     {
       ServerResponseEntity response = null;
       HttpWebResponse webResponse = null;
@@ -56,9 +56,10 @@
         }
 
         redirected = false;
-        if (this.entityCache.ContainsKey(requestedUri))
+        string cacheKey = string.Format("{0}/{1}", userAgent, requestedUri);
+        if (this.entityCache.ContainsKey(cacheKey))
         {
-          response = this.entityCache[requestedUri];
+          response = this.entityCache[cacheKey];
         }
         else
         {
@@ -70,12 +71,11 @@
           // Verify if http(s) port is open
           bool httpPortOpen = this.portScanner.IsPortOpen(uri.Host, 80);
           bool httpsPortOpen = this.portScanner.IsPortOpen(uri.Host, 443);
-
           
           // Send web request to server
-          webResponse = this.requestHandler.SendGETRequest(requestedUri, string.Empty, string.Empty, false);
+          webResponse = this.requestHandler.SendGETRequest(requestedUri, string.Empty, string.Empty, false, userAgent);
 
-          response = this.ProcessServerResponse(uri.Scheme, uri.Host, uri.PathAndQuery, webResponse);
+          response = this.ProcessServerResponse(uri.Scheme, uri.Host, uri.PathAndQuery, webResponse, userAgent);
           response.HttpPortOpen = httpPortOpen;
           response.HttpsPortOpen = httpsPortOpen;
           response.IpAddresses = ipAddresses;
@@ -113,14 +113,14 @@
     /// </summary>
     /// <param name="webResponse"></param>
     /// <returns></returns>
-    private ServerResponseEntity ProcessServerResponse(string requestedScheme, string requestedHost, string requestedPath, HttpWebResponse webResponse)
+    private ServerResponseEntity ProcessServerResponse(string requestedScheme, string requestedHost, string requestedPath, HttpWebResponse webResponse, string userAgent)
     {
       ServerResponseEntity serverResponse = new ServerResponseEntity();
       Dictionary<string, string> headers = new Dictionary<string, string>();
       string responseBody = string.Empty;
       string responseHeaders = string.Empty;
       string rawHeaders = string.Empty;
-      string cacheKey = string.Format("{0}://{1}{2}", requestedScheme, requestedHost, requestedPath);
+      string cacheKey = string.Format("{0}/{1}://{2}{3}", userAgent, requestedScheme, requestedHost, requestedPath);
       
       if (webResponse == null || webResponse.Headers == null)
       {
@@ -171,6 +171,7 @@
       }
 
       this.entityCache.Add(cacheKey, serverResponse);
+
       return serverResponse;
     }
 

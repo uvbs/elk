@@ -39,6 +39,7 @@
       {
         throw new ArgumentNullException("response");
       }
+
       Stream dataStream = null;
       StreamReader reader = null;
       string responseFromServer = null;
@@ -73,32 +74,32 @@
       return responseFromServer;
     }
 
-    public HttpWebResponse SendPOSTRequest(string uri, string content, string login, string password, bool allowAutoRedirect)
+    public HttpWebResponse SendPOSTRequest(string uri, string content, string login, string password, bool allowAutoRedirect, string userAgent)
     {
-      HttpWebRequest request = GeneratePOSTRequest(uri, content, login, password, allowAutoRedirect);
+      HttpWebRequest request = GeneratePOSTRequest(uri, content, login, password, allowAutoRedirect, userAgent);
       return GetResponse(request);
     }
 
-    public HttpWebResponse SendGETRequest(string uri, string login, string password, bool allowAutoRedirect)
+    public HttpWebResponse SendGETRequest(string uri, string login, string password, bool allowAutoRedirect, string userAgent)
     {
-      HttpWebRequest request = GenerateGETRequest(uri, login, password, allowAutoRedirect);
+      HttpWebRequest request = GenerateGETRequest(uri, login, password, allowAutoRedirect, userAgent);
       return GetResponse(request);
     }
 
-    public HttpWebResponse SendRequest(string uri, string content, string method, string login, string password, bool allowAutoRedirect)
+    public HttpWebResponse SendRequest(string uri, string content, string method, string login, string password, bool allowAutoRedirect, string userAgent)
     {
-      HttpWebRequest request = GenerateRequest(uri, content, method, login, password, allowAutoRedirect);
+      HttpWebRequest request = GenerateRequest(uri, content, method, login, password, allowAutoRedirect, userAgent);
       return GetResponse(request);
     }
 
-    public HttpWebRequest GenerateGETRequest(string uri, string login, string password, bool allowAutoRedirect)
+    public HttpWebRequest GenerateGETRequest(string uri, string login, string password, bool allowAutoRedirect, string userAgent)
     {
-      return GenerateRequest(uri, null, "GET", null, null, allowAutoRedirect);
+      return GenerateRequest(uri, null, "GET", null, null, allowAutoRedirect, userAgent);
     }
 
-    public HttpWebRequest GeneratePOSTRequest(string uri, string content, string login, string password, bool allowAutoRedirect)
+    public HttpWebRequest GeneratePOSTRequest(string uri, string content, string login, string password, bool allowAutoRedirect, string userAgent)
     {
-      return GenerateRequest(uri, content, "POST", null, null, allowAutoRedirect);
+      return GenerateRequest(uri, content, "POST", null, null, allowAutoRedirect, userAgent);
     }
 
 
@@ -143,7 +144,7 @@
 
     #region PRIVATE/INTERNAL
 
-    internal HttpWebRequest GenerateRequest(string uri, string content, string method, string login, string password, bool allowAutoRedirect)
+    internal HttpWebRequest GenerateRequest(string uri, string content, string method, string login, string password, bool allowAutoRedirect, string userAgent)
     {
       if (uri == null)
       {
@@ -156,6 +157,8 @@
       // Set cookie container to maintain cookies
       request.CookieContainer = cookies;
       request.AllowAutoRedirect = allowAutoRedirect;
+      // Set user agent
+      request.UserAgent = userAgent;
       // If login is empty use defaul credentials
       if (string.IsNullOrEmpty(login))
       {

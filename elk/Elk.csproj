@@ -139,6 +139,7 @@
     <Compile Include="DataTypes\Dgv\RefererRecord.cs" />
     <Compile Include="DataTypes\Interfaces\IVulnerabilityDefinition.cs" />
     <Compile Include="DataTypes\Enumerations\EnumVulnerability.cs" />
+    <Compile Include="DataTypes\UserAgent.cs" />
     <Compile Include="DataTypes\VulnerableElementAndConsequences.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

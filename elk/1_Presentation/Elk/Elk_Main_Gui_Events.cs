@@ -10,6 +10,14 @@
   public partial class Elk_Main
   {
 
+    #region MEMBERS
+
+    private string requestedUrl;
+    private string userAgent;
+
+    #endregion
+
+
     #region GUI EVENTS
 
     /// <summary>
@@ -22,8 +30,10 @@
 
       if (this.bt_StartStop.Text == "Start")
       {
-        this.DisableGuiElements();
+        this.requestedUrl = string.Format("http://{0}", this.tb_DestinationUrl.Text);
+        this.userAgent = this.cb_UserAgent.SelectedValue.ToString();
 
+        this.DisableGuiElements();
         this.bgw_HostChain.RunWorkerAsync();
 
         //this.bgw_Crawler.RunWorkerAsync();
@@ -105,8 +115,7 @@
     {
       try
       {
-        string url = string.Format("http://{0}", this.tb_DestinationUrl.Text);
-        this.analyzeServerHandler.DetermineHostsChain(url);
+        this.analyzeServerHandler.DetermineHostsChain(this.requestedUrl, this.userAgent);
       }
       catch (Exception ex)
       {
