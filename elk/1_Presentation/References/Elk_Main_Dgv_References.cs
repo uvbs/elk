@@ -1,12 +1,17 @@
 ﻿namespace Elk.Presentation
 {
   using Elk.DataTypes.Dgv;
+  using Elk.DataTypes.Interfaces;
+  using System;
+  using System.Collections.Generic;
   using System.ComponentModel;
   using System.Windows.Forms;
 
 
-  public partial class Elk_Main
+  public partial class Elk_Main : IObserverReferer
   {
+
+    #region PUBLIC
 
     private void InitializeDgvReferences()
     {
@@ -38,5 +43,29 @@
       this.referers = new BindingList<RefererRecord>();
       this.dgv_references.DataSource = this.referers;
     }
+
+    #endregion
+
+
+    #region INTERFACE: IObserverReferer
+
+    private List<Tuple<string, string>> refererBatch = new List<Tuple<string, string>>();
+    public delegate void UpdateRefererDelegate(string entryHostName, string cookies);
+    public void UpdateReferer(string entryHostName, string cookies)
+    {
+      if (this.InvokeRequired)
+      {
+        this.BeginInvoke(new UpdateRefererDelegate(this.UpdateReferer), new object[] { entryHostName, cookies });
+        return;
+      }
+
+      lock (this.refererBatch)
+      {
+        this.refererBatch.Add(new Tuple<string, string>(entryHostName, cookies));
+      }
+    }
+
+    #endregion
+
   }
 }

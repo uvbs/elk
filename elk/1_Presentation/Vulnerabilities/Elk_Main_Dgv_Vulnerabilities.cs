@@ -7,6 +7,9 @@
 
   public partial class Elk_Main
   {
+
+    #region PRIVATE
+
     private void InitializeDgvVulnerabilities()
     {
       DataGridViewTextBoxColumn columnTitle = new DataGridViewTextBoxColumn();
@@ -44,5 +47,8 @@
       this.foundVulnerabilities = new BindingList<IVulnerabilityDefinition>();
       this.dgv_Vulnerabilities.DataSource = this.foundVulnerabilities;
     }
+
+    #endregion 
+
   }
 }

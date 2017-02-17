@@ -2,6 +2,7 @@
 {
   using Elk.DataTypes.Enumerations;
 
+
   public class VulnerableElementAndConsequences
   {
 

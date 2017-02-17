@@ -2,6 +2,7 @@
 {
   using System.ComponentModel;
 
+
   public class RefererRecord : INotifyPropertyChanged
   {
 

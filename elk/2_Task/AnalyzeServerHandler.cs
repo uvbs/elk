@@ -4,7 +4,9 @@
   using Elk.DataTypes.Interfaces;
   using System;
   using System.Collections.Generic;
+  using System.IO;
   using System.Net;
+  using System.Text;
 
 
   public class AnalyzeServerHandler : IObservableHostChain
@@ -15,8 +17,15 @@
     private HttpRequestHandler requestHandler;
     private List<ServerResponseEntity> responseEntityChain;
     private List<IObserverHostChain> observersHostChain;
-    private Dictionary<string, ServerResponseEntity> entityCache;
+    private static Dictionary<string, ServerResponseEntity> entityCache = new Dictionary<string, ServerResponseEntity>();
     private TcpPortChecker portScanner;
+
+    #endregion
+
+
+    #region PROPERTIES
+
+    public static Dictionary<string, ServerResponseEntity> EntityCache { get { return entityCache; } set { entityCache = value; } }
 
     #endregion
 
@@ -28,7 +37,6 @@
       this.requestHandler = new HttpRequestHandler();
       this.responseEntityChain = new List<ServerResponseEntity>();
       this.observersHostChain = new List<IObserverHostChain>();
-      this.entityCache = new Dictionary<string, ServerResponseEntity>();
       this.portScanner = new TcpPortChecker();
     }
 
@@ -57,9 +65,9 @@
 
         redirected = false;
         string cacheKey = string.Format("{0}/{1}", userAgent, requestedUri);
-        if (this.entityCache.ContainsKey(cacheKey))
+        if (entityCache.ContainsKey(cacheKey))
         {
-          response = this.entityCache[cacheKey];
+          response = entityCache[cacheKey];
         }
         else
         {
@@ -170,7 +178,15 @@
         serverResponse.HpkpReport = headers["public-key-pins-report-only"];
       }
 
-      this.entityCache.Add(cacheKey, serverResponse);
+      if (headers.ContainsKey("content-type") &&
+        headers["content-type"].ToLower().StartsWith("text"))
+      {
+        StreamReader reader = new StreamReader(webResponse.GetResponseStream(), Encoding.UTF8);
+        serverResponse.Payload = reader.ReadToEnd();
+        reader.Close();
+      }
+
+      entityCache.Add(cacheKey, serverResponse);
 
       return serverResponse;
     }

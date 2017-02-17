@@ -1,6 +1,7 @@
 ﻿namespace Elk.Presentation
 {
   using Elk.DataTypes;
+  using Elk.DataTypes.Dgv;
   using Elk.DataTypes.Interfaces;
   using System;
   using System.Collections.Generic;
@@ -113,6 +114,7 @@
 
     private void bgw_HostChain_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
     {
+      // Determine host chain
       try
       {
         this.analyzeServerHandler.DetermineHostsChain(this.requestedUrl, this.userAgent);
@@ -152,6 +154,14 @@
     {
       this.l_HostChainValue.Text = "Done";
       this.SetButtonToStart();
+
+      // Determine cross calls
+      if (this.tv_ResponseEntities != null &&
+          this.tv_ResponseEntities.Nodes != null &&
+          this.tv_ResponseEntities.Nodes.Count > 0)
+      {
+        this.crossCallHandler.DetermineCrossCalls(this.tv_ResponseEntities.Nodes[this.tv_ResponseEntities.Nodes.Count - 1].Text, this.userAgent);
+      }
     }
     
 

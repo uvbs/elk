@@ -24,6 +24,8 @@
     private bool httpPortOpen;
     private bool httpsPortOpen;
 
+    private string payload;
+
     #endregion
 
 
@@ -78,7 +80,9 @@
     public bool HttpsPortOpen { get { return this.httpsPortOpen; } set { this.httpsPortOpen = value; } }
     
     public string IpAddresses { get { return this.ipAddresses; } set { this.ipAddresses = value; } }
-    
+
+    public string Payload { get { return this.payload; }  set { this.payload = value; } }
+
     #endregion
 
 

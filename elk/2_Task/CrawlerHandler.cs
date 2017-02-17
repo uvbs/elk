@@ -76,6 +76,7 @@
       this.NotifyCrawler(string.Format("About to crawl link {0} which was found on page {1}", pageToCrawl.Uri.AbsoluteUri, pageToCrawl.ParentUri.AbsoluteUri));
     }
 
+
     private void crawler_ProcessPageCrawlCompleted(object sender, PageCrawlCompletedArgs e)
     {
       CrawledPage crawledPage = e.CrawledPage;
@@ -172,7 +173,6 @@
     }
 
     #endregion
-
 
   }
 }

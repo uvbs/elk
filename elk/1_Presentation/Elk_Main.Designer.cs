@@ -69,6 +69,8 @@
       this.l_Hsts = new System.Windows.Forms.Label();
       this.l_ResponseStatus = new System.Windows.Forms.Label();
       this.tc_AnalyzeHttpServer = new System.Windows.Forms.TabControl();
+      this.tp_CrossCalls = new System.Windows.Forms.TabPage();
+      this.dgv_CrossCalls = new System.Windows.Forms.DataGridView();
       this.tp_ServerVulnerabilities = new System.Windows.Forms.TabPage();
       this.dgv_Vulnerabilities = new System.Windows.Forms.DataGridView();
       this.tp_ExternalBackRedirect = new System.Windows.Forms.TabPage();
@@ -80,6 +82,8 @@
       this.tp_HostChain.SuspendLayout();
       this.gb_RequestResults.SuspendLayout();
       this.tc_AnalyzeHttpServer.SuspendLayout();
+      this.tp_CrossCalls.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.dgv_CrossCalls)).BeginInit();
       this.tp_ServerVulnerabilities.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.dgv_Vulnerabilities)).BeginInit();
       this.SuspendLayout();
@@ -525,17 +529,48 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
       this.tc_AnalyzeHttpServer.Controls.Add(this.tp_HostChain);
+      this.tc_AnalyzeHttpServer.Controls.Add(this.tp_CrossCalls);
       this.tc_AnalyzeHttpServer.Controls.Add(this.tp_ServerVulnerabilities);
       this.tc_AnalyzeHttpServer.Controls.Add(this.tp_Crawler);
       this.tc_AnalyzeHttpServer.Controls.Add(this.tp_PageLinksTo);
       this.tc_AnalyzeHttpServer.Controls.Add(this.tp_ExternalBackRedirect);
       this.tc_AnalyzeHttpServer.Controls.Add(this.tp_SharedCookies);
       this.tc_AnalyzeHttpServer.Controls.Add(this.tp_CookieValueInUrl);
-      this.tc_AnalyzeHttpServer.Location = new System.Drawing.Point(12, 54);
+      this.tc_AnalyzeHttpServer.Location = new System.Drawing.Point(12, 62);
       this.tc_AnalyzeHttpServer.Name = "tc_AnalyzeHttpServer";
       this.tc_AnalyzeHttpServer.SelectedIndex = 0;
       this.tc_AnalyzeHttpServer.Size = new System.Drawing.Size(1178, 545);
       this.tc_AnalyzeHttpServer.TabIndex = 4;
+      // 
+      // tp_CrossCalls
+      // 
+      this.tp_CrossCalls.Controls.Add(this.dgv_CrossCalls);
+      this.tp_CrossCalls.Location = new System.Drawing.Point(4, 22);
+      this.tp_CrossCalls.Name = "tp_CrossCalls";
+      this.tp_CrossCalls.Padding = new System.Windows.Forms.Padding(3);
+      this.tp_CrossCalls.Size = new System.Drawing.Size(1170, 519);
+      this.tp_CrossCalls.TabIndex = 8;
+      this.tp_CrossCalls.Text = "Cross calls";
+      this.tp_CrossCalls.UseVisualStyleBackColor = true;
+      // 
+      // dgv_CrossCalls
+      // 
+      this.dgv_CrossCalls.AllowUserToAddRows = false;
+      this.dgv_CrossCalls.AllowUserToDeleteRows = false;
+      this.dgv_CrossCalls.AllowUserToResizeRows = false;
+      this.dgv_CrossCalls.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.dgv_CrossCalls.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+      this.dgv_CrossCalls.Location = new System.Drawing.Point(10, 11);
+      this.dgv_CrossCalls.MultiSelect = false;
+      this.dgv_CrossCalls.Name = "dgv_CrossCalls";
+      this.dgv_CrossCalls.RowHeadersVisible = false;
+      this.dgv_CrossCalls.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+      this.dgv_CrossCalls.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+      this.dgv_CrossCalls.Size = new System.Drawing.Size(1147, 497);
+      this.dgv_CrossCalls.TabIndex = 0;
+      this.dgv_CrossCalls.DoubleClick += new System.EventHandler(this.DGV_CrossCalls_DoubleClick);
       // 
       // tp_ServerVulnerabilities
       // 
@@ -550,8 +585,12 @@
       // 
       // dgv_Vulnerabilities
       // 
+      this.dgv_Vulnerabilities.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
       this.dgv_Vulnerabilities.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
       this.dgv_Vulnerabilities.Location = new System.Drawing.Point(10, 11);
+      this.dgv_Vulnerabilities.MultiSelect = false;
       this.dgv_Vulnerabilities.Name = "dgv_Vulnerabilities";
       this.dgv_Vulnerabilities.RowHeadersVisible = false;
       this.dgv_Vulnerabilities.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -615,6 +654,8 @@
       this.gb_RequestResults.ResumeLayout(false);
       this.gb_RequestResults.PerformLayout();
       this.tc_AnalyzeHttpServer.ResumeLayout(false);
+      this.tp_CrossCalls.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.dgv_CrossCalls)).EndInit();
       this.tp_ServerVulnerabilities.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.dgv_Vulnerabilities)).EndInit();
       this.ResumeLayout(false);
@@ -670,6 +711,8 @@
     private System.Windows.Forms.Label l_IpAddress;
     private System.Windows.Forms.ComboBox cb_UserAgent;
     private System.Windows.Forms.Label label3;
+    private System.Windows.Forms.TabPage tp_CrossCalls;
+    private System.Windows.Forms.DataGridView dgv_CrossCalls;
   }
 }
 

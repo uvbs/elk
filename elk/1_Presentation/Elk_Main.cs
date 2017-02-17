@@ -10,15 +10,17 @@
   using System.Windows.Forms;
 
 
-  public partial class Elk_Main : Form, IObserverCrawler, IObserverHostChain, IObserverReferer
+  public partial class Elk_Main : Form
   {
 
     #region MEMBERS
 
     private AnalyzeServerHandler analyzeServerHandler;
+    private CrossCallHandler crossCallHandler;
     private List<ServerResponseEntity> responseEntityChain;
     private CrawlerHandler crawlerHandler;
     private BindingList<RefererRecord> referers;
+    private BindingList<CrossCallRecord> crossCalls;    
     private BindingList<IVulnerabilityDefinition> foundVulnerabilities;
     private List<UserAgent> userAgents;
 
@@ -36,17 +38,20 @@
       // Initialize DataGridViews
       this.InitializeDgvVulnerabilities();
       this.InitializeDgvReferences();
+      this.InitializeDgvCrossCalls();
 
       // Initialize members
       this.responseEntityChain = new List<ServerResponseEntity>();
       this.crawlerHandler = new CrawlerHandler();
       this.analyzeServerHandler = new AnalyzeServerHandler();
+      this.crossCallHandler = new CrossCallHandler();
       this.vulnHandler = new VulnerabilityScanner();
 
       // Register at observables
       this.crawlerHandler.AddObserverCrawler(this);
       this.crawlerHandler.AddObserverReferer(this);
       this.analyzeServerHandler.AddObserverHostChain(this);
+      this.crossCallHandler.AddObserverCrossCall(this);
 
       // Populate UserAgent ComboBox
       this.userAgents = new List<UserAgent>();
@@ -159,78 +164,6 @@
     }
 
     #endregion
-
-
-    #region INTERFACE: IObserverCrawler
-
-    public void UpdateLog(string logMessage)
-    {
-      lock (this.crawlerLogBatch)
-      {
-        string timestampedLogMessage = string.Format("{0} - {1}", DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss"), logMessage);
-        this.crawlerLogBatch.Add(timestampedLogMessage);
-      }
-    }
-
-    #endregion
-
-
-    #region INTERFACE: IObserverHostsChain
-
-    public delegate void UpdateHostChainDelegate(List<ServerResponseEntity> newHostChain);
-    public void UpdateHostChain(List<ServerResponseEntity> newHostChain)
-    {
-      if (this.InvokeRequired)
-      {
-        this.BeginInvoke(new UpdateHostChainDelegate(this.UpdateHostChain), new object[] { newHostChain });
-        return;
-      }
-
-      this.responseEntityChain = newHostChain;
-      this.tv_ResponseEntities.Nodes.Clear();
-      if (this.responseEntityChain == null || this.responseEntityChain.Count <= 0)
-      {
-        return;
-      }
-
-
-      // Manage TreeView
-      foreach (ServerResponseEntity tmpElem in this.responseEntityChain)
-      {
-        string key = string.Format("{0}", tmpElem.RequestedUrl);
-        this.tv_ResponseEntities.Nodes.Add(key);
-      }
-
-      this.tv_ResponseEntities.SelectedNode = this.tv_ResponseEntities.Nodes[0];
-
-      // Manage DataGridView
-      DataForVulnerabilityScanner data = new DataForVulnerabilityScanner(this.responseEntityChain);
-      List<IVulnerabilityDefinition> foundVulns = this.vulnHandler.StartScanning(data);
-      this.UpdateVulnerabilitiesDgv(foundVulns);
-    }
-
-    #endregion
-
-
-    #region INTERFACE: IObserverReferer
-
-    private List<Tuple<string, string>> refererBatch = new List<Tuple<string, string>>();
-    public delegate void UpdateRefererDelegate(string entryHostName, string cookies);
-    public void UpdateReferer(string entryHostName, string cookies)
-    {
-      if (this.InvokeRequired)
-      {
-        this.BeginInvoke(new UpdateRefererDelegate(this.UpdateReferer), new object[] { entryHostName, cookies });
-        return;
-      }
-
-      lock (this.refererBatch)
-      {
-        this.refererBatch.Add(new Tuple<string, string>(entryHostName, cookies));
-      }
-    }
-
-    #endregion
-    
+   
   }
 }
