@@ -96,13 +96,16 @@
     <Compile Include="1_Presentation\CrossCalls\Elk_Main_Dgv_CrossCalls.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="1_Presentation\CrossCalls\HtmlDetails.cs">
+    <Compile Include="1_Presentation\HtmlDetails.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="1_Presentation\CrossCalls\HtmlDetails.Designer.cs">
+    <Compile Include="1_Presentation\HtmlDetails.Designer.cs">
       <DependentUpon>HtmlDetails.cs</DependentUpon>
     </Compile>
     <Compile Include="1_Presentation\HostsChain\Elk_Main_Dgv_HostChain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="1_Presentation\PageLinksTo\Elk_Main_Dgv_PageLinksTo.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="1_Presentation\References\Elk_Main_Dgv_References.cs">
@@ -127,6 +130,7 @@
       <DependentUpon>VulnerabilityDetails.cs</DependentUpon>
     </Compile>
     <Compile Include="2_Task\CrossCallHandler.cs" />
+    <Compile Include="2_Task\PageLinksToHandler.cs" />
     <Compile Include="2_Task\TcpPortChecker.cs" />
     <Compile Include="2_Task\VulnerabilityScanner.cs" />
     <Compile Include="DataTypes\DataForVulnerabilityScanner.cs" />
@@ -135,7 +139,10 @@
     <Compile Include="DataTypes\Enumerations\EnumRequestTriggerSource.cs" />
     <Compile Include="2_Task\AnalyzeServerHandler.cs" />
     <Compile Include="2_Task\CrawlerHandler.cs" />
+    <Compile Include="DataTypes\Dgv\HyperLinkRecord.cs" />
     <Compile Include="DataTypes\Interfaces\CrossCall\IObservableCrossCall.cs" />
+    <Compile Include="DataTypes\Interfaces\PageLinksTo\IObservablePageLinksTo.cs" />
+    <Compile Include="DataTypes\Interfaces\PageLinksTo\IObserverPageLinksTo.cs" />
     <Compile Include="DataTypes\Interfaces\Referer\IObservableReferer.cs" />
     <Compile Include="DataTypes\Interfaces\HostChain\IObservableHostChain.cs" />
     <Compile Include="DataTypes\Interfaces\Crawler\IObservableCrawler.cs" />
@@ -163,7 +170,7 @@
     <Compile Include="Vulnerabilities\HttpsByTemporaryRedirectsOnly.cs" />
     <Compile Include="Vulnerabilities\NoHttpsUsed.cs" />
     <Compile Include="Vulnerabilities\VulnerabilityCatalog.cs" />
-    <EmbeddedResource Include="1_Presentation\CrossCalls\HtmlDetails.resx">
+    <EmbeddedResource Include="1_Presentation\HtmlDetails.resx">
       <DependentUpon>HtmlDetails.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="1_Presentation\Elk_Main.resx">

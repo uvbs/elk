@@ -162,6 +162,14 @@
       {
         this.crossCallHandler.DetermineCrossCalls(this.tv_ResponseEntities.Nodes[this.tv_ResponseEntities.Nodes.Count - 1].Text, this.userAgent);
       }
+
+      // Determine hyper links
+      if (this.tv_ResponseEntities != null &&
+          this.tv_ResponseEntities.Nodes != null &&
+          this.tv_ResponseEntities.Nodes.Count > 0)
+      {
+        this.pageLinksToHandler.DetermineHyperLinks(this.tv_ResponseEntities.Nodes[this.tv_ResponseEntities.Nodes.Count - 1].Text, this.userAgent);
+      }
     }
     
 

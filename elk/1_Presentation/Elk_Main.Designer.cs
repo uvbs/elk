@@ -41,7 +41,7 @@
       this.tp_CookieValueInUrl = new System.Windows.Forms.TabPage();
       this.tp_SharedCookies = new System.Windows.Forms.TabPage();
       this.tp_PageLinksTo = new System.Windows.Forms.TabPage();
-      this.dgv_references = new System.Windows.Forms.DataGridView();
+      this.dgv_PageLinksTo = new System.Windows.Forms.DataGridView();
       this.tp_Crawler = new System.Windows.Forms.TabPage();
       this.tb_CrawlerLog = new System.Windows.Forms.TextBox();
       this.tp_HostChain = new System.Windows.Forms.TabPage();
@@ -77,7 +77,7 @@
       this.cb_UserAgent = new System.Windows.Forms.ComboBox();
       this.label3 = new System.Windows.Forms.Label();
       this.tp_PageLinksTo.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.dgv_references)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.dgv_PageLinksTo)).BeginInit();
       this.tp_Crawler.SuspendLayout();
       this.tp_HostChain.SuspendLayout();
       this.gb_RequestResults.SuspendLayout();
@@ -206,7 +206,7 @@
       // tp_PageLinksTo
       // 
       this.tp_PageLinksTo.BackColor = System.Drawing.Color.WhiteSmoke;
-      this.tp_PageLinksTo.Controls.Add(this.dgv_references);
+      this.tp_PageLinksTo.Controls.Add(this.dgv_PageLinksTo);
       this.tp_PageLinksTo.Location = new System.Drawing.Point(4, 22);
       this.tp_PageLinksTo.Name = "tp_PageLinksTo";
       this.tp_PageLinksTo.Padding = new System.Windows.Forms.Padding(3);
@@ -214,18 +214,19 @@
       this.tp_PageLinksTo.TabIndex = 2;
       this.tp_PageLinksTo.Text = "Page links to";
       // 
-      // dgv_references
+      // dgv_PageLinksTo
       // 
-      this.dgv_references.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+      this.dgv_PageLinksTo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-      this.dgv_references.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-      this.dgv_references.Location = new System.Drawing.Point(10, 11);
-      this.dgv_references.Name = "dgv_references";
-      this.dgv_references.RowHeadersVisible = false;
-      this.dgv_references.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-      this.dgv_references.Size = new System.Drawing.Size(1147, 497);
-      this.dgv_references.TabIndex = 0;
+      this.dgv_PageLinksTo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+      this.dgv_PageLinksTo.Location = new System.Drawing.Point(10, 11);
+      this.dgv_PageLinksTo.Name = "dgv_PageLinksTo";
+      this.dgv_PageLinksTo.RowHeadersVisible = false;
+      this.dgv_PageLinksTo.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+      this.dgv_PageLinksTo.Size = new System.Drawing.Size(1147, 497);
+      this.dgv_PageLinksTo.TabIndex = 0;
+      this.dgv_PageLinksTo.DoubleClick += new System.EventHandler(this.DGV_HyperLinks_DoubleClick);
       // 
       // tp_Crawler
       // 
@@ -530,9 +531,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
       this.tc_AnalyzeHttpServer.Controls.Add(this.tp_HostChain);
       this.tc_AnalyzeHttpServer.Controls.Add(this.tp_CrossCalls);
+      this.tc_AnalyzeHttpServer.Controls.Add(this.tp_PageLinksTo);
       this.tc_AnalyzeHttpServer.Controls.Add(this.tp_ServerVulnerabilities);
       this.tc_AnalyzeHttpServer.Controls.Add(this.tp_Crawler);
-      this.tc_AnalyzeHttpServer.Controls.Add(this.tp_PageLinksTo);
       this.tc_AnalyzeHttpServer.Controls.Add(this.tp_ExternalBackRedirect);
       this.tc_AnalyzeHttpServer.Controls.Add(this.tp_SharedCookies);
       this.tc_AnalyzeHttpServer.Controls.Add(this.tp_CookieValueInUrl);
@@ -647,7 +648,7 @@
       this.Name = "Elk_Main";
       this.Text = "Elk - The HTTP request server chain analyzer";
       this.tp_PageLinksTo.ResumeLayout(false);
-      ((System.ComponentModel.ISupportInitialize)(this.dgv_references)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.dgv_PageLinksTo)).EndInit();
       this.tp_Crawler.ResumeLayout(false);
       this.tp_Crawler.PerformLayout();
       this.tp_HostChain.ResumeLayout(false);
@@ -678,7 +679,7 @@
     private System.Windows.Forms.TabPage tp_CookieValueInUrl;
     private System.Windows.Forms.TabPage tp_SharedCookies;
     private System.Windows.Forms.TabPage tp_PageLinksTo;
-    private System.Windows.Forms.DataGridView dgv_references;
+    private System.Windows.Forms.DataGridView dgv_PageLinksTo;
     private System.Windows.Forms.TabPage tp_Crawler;
     private System.Windows.Forms.TextBox tb_CrawlerLog;
     private System.Windows.Forms.TabPage tp_HostChain;

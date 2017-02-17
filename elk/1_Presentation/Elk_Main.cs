@@ -17,10 +17,12 @@
 
     private AnalyzeServerHandler analyzeServerHandler;
     private CrossCallHandler crossCallHandler;
-    private List<ServerResponseEntity> responseEntityChain;
     private CrawlerHandler crawlerHandler;
+    private PageLinksToHandler pageLinksToHandler;
+    private List<ServerResponseEntity> responseEntityChain;
     private BindingList<RefererRecord> referers;
-    private BindingList<CrossCallRecord> crossCalls;    
+    private BindingList<CrossCallRecord> crossCalls;
+    private BindingList<HyperLinkRecord> hyperLinks;
     private BindingList<IVulnerabilityDefinition> foundVulnerabilities;
     private List<UserAgent> userAgents;
 
@@ -39,12 +41,14 @@
       this.InitializeDgvVulnerabilities();
       this.InitializeDgvReferences();
       this.InitializeDgvCrossCalls();
+      this.InitializeDgvPageLinksTo();
 
       // Initialize members
       this.responseEntityChain = new List<ServerResponseEntity>();
       this.crawlerHandler = new CrawlerHandler();
       this.analyzeServerHandler = new AnalyzeServerHandler();
       this.crossCallHandler = new CrossCallHandler();
+      this.pageLinksToHandler = new PageLinksToHandler();
       this.vulnHandler = new VulnerabilityScanner();
 
       // Register at observables
@@ -52,6 +56,7 @@
       this.crawlerHandler.AddObserverReferer(this);
       this.analyzeServerHandler.AddObserverHostChain(this);
       this.crossCallHandler.AddObserverCrossCall(this);
+      this.pageLinksToHandler.AddObserverPageLinksTo(this);
 
       // Populate UserAgent ComboBox
       this.userAgents = new List<UserAgent>();
@@ -164,6 +169,6 @@
     }
 
     #endregion
-   
+    
   }
 }

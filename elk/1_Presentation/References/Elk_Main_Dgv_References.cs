@@ -22,7 +22,7 @@
       columnEntryHostName.ReadOnly = true;
       columnEntryHostName.Width = 180;
       columnEntryHostName.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-      this.dgv_references.Columns.Add(columnEntryHostName);
+      this.dgv_PageLinksTo.Columns.Add(columnEntryHostName);
 
       DataGridViewTextBoxColumn columnEndHostName = new DataGridViewTextBoxColumn();
       columnEndHostName.DataPropertyName = "EndHostName";
@@ -30,7 +30,7 @@
       columnEndHostName.HeaderText = "End host name";
       columnEndHostName.ReadOnly = true;
       columnEndHostName.Width = 180;
-      this.dgv_references.Columns.Add(columnEndHostName);
+      this.dgv_PageLinksTo.Columns.Add(columnEndHostName);
 
       DataGridViewTextBoxColumn columnPacketType = new DataGridViewTextBoxColumn();
       columnPacketType.DataPropertyName = "Cookies";
@@ -38,10 +38,10 @@
       columnPacketType.HeaderText = "Cookies";
       columnPacketType.ReadOnly = true;
       columnPacketType.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-      this.dgv_references.Columns.Add(columnPacketType);
+      this.dgv_PageLinksTo.Columns.Add(columnPacketType);
 
       this.referers = new BindingList<RefererRecord>();
-      this.dgv_references.DataSource = this.referers;
+      this.dgv_PageLinksTo.DataSource = this.referers;
     }
 
     #endregion

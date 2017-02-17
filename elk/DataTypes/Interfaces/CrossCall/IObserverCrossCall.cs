@@ -8,6 +8,6 @@
   {
     void UpdateCrossCallList(List<CrossCallRecord> crossCallList);
 
-    void UpdateHtmlCode(string htmlCode);
+    void UpdateHtmlCodeCrossCalls(string htmlCode);
   }
 }

@@ -1,4 +1,4 @@
-﻿namespace Elk.Presentation.CrossCalls
+﻿namespace Elk.Presentation
 {
   partial class HtmlDetails_Main
   {

@@ -50,8 +50,7 @@
                                                                                    { "iframe", new List<string>() { "src" } },
                                                                                    { "base", new List<string>() { "href" } },
                                                                                    { "link", new List<string>() { "href" } },
-                                                                                   { "img", new List<string>() { "src" } },
-                                                                                   { "a", new List<string>() { "href" } }
+                                                                                   { "img", new List<string>() { "src" } }
                                                                                 };
       var root = doc.DocumentNode;
 
@@ -71,7 +70,7 @@
             string link = tmpNode.GetAttributeValue(attributeName, string.Empty);
             Uri tmpUri;
 
-            if (Uri.TryCreate(link, UriKind.Absolute, out tmpUri))
+            if (Uri.TryCreate(link, UriKind.Absolute, out tmpUri) == true)
             {
 
               if ((tmpUri.Host != crossCallBasisUri.Host ||
@@ -125,7 +124,7 @@
     {
       foreach (IObserverCrossCall observer in observerList)
       {
-        observer.UpdateHtmlCode(htmlCode);
+        observer.UpdateHtmlCodeCrossCalls(htmlCode);
       }
     }
 

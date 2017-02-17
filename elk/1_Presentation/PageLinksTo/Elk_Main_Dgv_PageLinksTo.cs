@@ -8,35 +8,27 @@
   using System.Windows.Forms;
 
 
-  public partial class Elk_Main : IObserverCrossCall
+  public partial class Elk_Main : IObserverPageLinksTo
   {
 
     #region MEMBERS
 
-    private string htmlCodeCrossCalls;
+    private string htmlCodeHyperLinks;
 
     #endregion
 
 
     #region PUBLIC
 
-    private void InitializeDgvCrossCalls()
+    private void InitializeDgvPageLinksTo()
     {
-      DataGridViewTextBoxColumn columnTag = new DataGridViewTextBoxColumn();
-      columnTag.DataPropertyName = "Tag";
-      columnTag.Name = "Tag";
-      columnTag.HeaderText = "Tag";
-      columnTag.ReadOnly = true;
-      columnTag.Width = 40;
-      this.dgv_CrossCalls.Columns.Add(columnTag);
-
       DataGridViewTextBoxColumn columnScheme = new DataGridViewTextBoxColumn();
       columnScheme.DataPropertyName = "Scheme";
       columnScheme.Name = "Scheme";
       columnScheme.HeaderText = "Scheme";
       columnScheme.ReadOnly = true;
       columnScheme.Width = 80;
-      this.dgv_CrossCalls.Columns.Add(columnScheme);
+      this.dgv_PageLinksTo.Columns.Add(columnScheme);
 
       DataGridViewTextBoxColumn columnHostName = new DataGridViewTextBoxColumn();
       columnHostName.DataPropertyName = "HostName";
@@ -44,7 +36,7 @@
       columnHostName.HeaderText = "Host name";
       columnHostName.ReadOnly = true;
       columnHostName.Width = 180;
-      this.dgv_CrossCalls.Columns.Add(columnHostName);
+      this.dgv_PageLinksTo.Columns.Add(columnHostName);
 
       DataGridViewTextBoxColumn columnPath = new DataGridViewTextBoxColumn();
       columnPath.DataPropertyName = "Path";
@@ -52,7 +44,7 @@
       columnPath.HeaderText = "Path";
       columnPath.ReadOnly = true;
       columnPath.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-      this.dgv_CrossCalls.Columns.Add(columnPath);
+      this.dgv_PageLinksTo.Columns.Add(columnPath);
 
       DataGridViewTextBoxColumn columnOuterHtml = new DataGridViewTextBoxColumn();
       columnOuterHtml.DataPropertyName = "OuterHtml";
@@ -62,7 +54,7 @@
       columnOuterHtml.HeaderText = string.Empty;
       columnOuterHtml.Visible = false;
       columnOuterHtml.Width = 0;
-      this.dgv_CrossCalls.Columns.Add(columnOuterHtml);
+      this.dgv_PageLinksTo.Columns.Add(columnOuterHtml);
 
       DataGridViewTextBoxColumn columnStreamPosition = new DataGridViewTextBoxColumn();
       columnStreamPosition.DataPropertyName = "StreamPosition";
@@ -71,7 +63,7 @@
       columnStreamPosition.ReadOnly = true;
       columnStreamPosition.Visible = false;
       columnStreamPosition.Width = 0;
-      this.dgv_CrossCalls.Columns.Add(columnStreamPosition);
+      this.dgv_PageLinksTo.Columns.Add(columnStreamPosition);
 
       DataGridViewTextBoxColumn columnLine = new DataGridViewTextBoxColumn();
       columnLine.DataPropertyName = "Line";
@@ -80,7 +72,7 @@
       columnLine.ReadOnly = true;
       columnLine.Visible = false;
       columnLine.Width = 0;
-      this.dgv_CrossCalls.Columns.Add(columnLine);
+      this.dgv_PageLinksTo.Columns.Add(columnLine);
 
       DataGridViewTextBoxColumn columnLinePosition = new DataGridViewTextBoxColumn();
       columnLinePosition.DataPropertyName = "LinePosition";
@@ -89,30 +81,31 @@
       columnLinePosition.ReadOnly = true;
       columnLinePosition.Visible = false;
       columnLinePosition.Width = 0;
-      this.dgv_CrossCalls.Columns.Add(columnLinePosition);
+      this.dgv_PageLinksTo.Columns.Add(columnLinePosition);
 
-      this.crossCalls = new BindingList<CrossCallRecord>();
-      this.dgv_CrossCalls.DataSource = this.crossCalls;
+      this.hyperLinks = new BindingList<HyperLinkRecord>();
+      this.dgv_PageLinksTo.DataSource = this.hyperLinks;
     }
-    
 
-    #region INTERFACE: IObserverCrossCall
 
-    public void UpdateCrossCallList(List<CrossCallRecord> newCrossCallList)
+    #region INTERFACE: IObserverCrawler
+
+    public void UpdateHyperLinkList(List<HyperLinkRecord> newHyperLinkList)
     {
-      this.crossCalls.Clear();
+      this.hyperLinks.Clear();
 
-      if (newCrossCallList != null && newCrossCallList.Count > 0)
+      if (newHyperLinkList != null && newHyperLinkList.Count > 0)
       {
-        newCrossCallList.ForEach(elem => this.crossCalls.Add(elem));
+        newHyperLinkList.ForEach(elem => this.hyperLinks.Add(elem));
       }
     }
 
-    public void UpdateHtmlCodeCrossCalls(string htmlCode)
+
+    public void UpdateHyHtmlCodeHyperLinks(string htmlCode)
     {
       if (string.IsNullOrEmpty(htmlCode) == false)
       {
-        this.htmlCodeCrossCalls = htmlCode;
+        this.htmlCodeHyperLinks = htmlCode;
       }
     }
 
@@ -123,16 +116,16 @@
 
     #region EVENTS
 
-    private void DGV_CrossCalls_DoubleClick(object sender, EventArgs e)
+    private void DGV_HyperLinks_DoubleClick(object sender, EventArgs e)
     {
       try
       {
-        int currentIndex = this.dgv_CrossCalls.CurrentCell.RowIndex;        
-        string outerHtmlData = this.dgv_CrossCalls.Rows[currentIndex].Cells["OuterHtml"].Value.ToString();
-        int line = (int) this.dgv_CrossCalls.Rows[currentIndex].Cells["Line"].Value;
-        int linePosition = (int) this.dgv_CrossCalls.Rows[currentIndex].Cells["LinePosition"].Value;
-        int streamPosition = (int)this.dgv_CrossCalls.Rows[currentIndex].Cells["StreamPosition"].Value;
-        
+        int currentIndex = this.dgv_PageLinksTo.CurrentCell.RowIndex;
+        string outerHtmlData = this.dgv_PageLinksTo.Rows[currentIndex].Cells["OuterHtml"].Value.ToString();
+        int line = (int)this.dgv_PageLinksTo.Rows[currentIndex].Cells["Line"].Value;
+        int linePosition = (int)this.dgv_PageLinksTo.Rows[currentIndex].Cells["LinePosition"].Value;
+        int streamPosition = (int)this.dgv_PageLinksTo.Rows[currentIndex].Cells["StreamPosition"].Value;
+
         HtmlDetails_Main htmlView = new HtmlDetails_Main(this.htmlCodeCrossCalls, streamPosition, outerHtmlData.Length);
         htmlView.ShowDialog();
       }
