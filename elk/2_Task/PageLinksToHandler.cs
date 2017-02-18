@@ -31,12 +31,12 @@
         return;
       }
 
-      if (AnalyzeServerHandler.EntityCache.ContainsKey(cacheKey) == false)
+      if (HostChainHandler.EntityCache.ContainsKey(cacheKey) == false)
       {
         return;
       }
 
-      DataTypes.ServerResponseEntity dataRecord = AnalyzeServerHandler.EntityCache[cacheKey];
+      DataTypes.ServerResponseEntity dataRecord = HostChainHandler.EntityCache[cacheKey];
       var doc = new HAP.HtmlDocument();
       string htmlCode = dataRecord.Payload.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n", "\r\n");
       doc.LoadHtml(htmlCode);

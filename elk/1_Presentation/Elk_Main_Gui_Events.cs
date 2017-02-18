@@ -114,21 +114,24 @@
 
     private void bgw_HostChain_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
     {
+      List<String> headers = new List<string>();
+
+      // Set headers
+      if (string.IsNullOrEmpty(this.tb_CookieValue.Text) == false)
+      {
+        headers.Add(string.Format("Cookie: {0}", tb_CookieValue.Text));
+      }
+
       // Determine host chain
       try
       {
-        this.analyzeServerHandler.DetermineHostsChain(this.requestedUrl, this.userAgent);
+        this.analyzeServerHandler.DetermineHostsChain(this.requestedUrl, this.userAgent, headers);
       }
       catch (Exception ex)
       {
         this.bgw_HostChain.CancelAsync();
         MessageBox.Show(string.Format("Exception: {0}", ex.Message));
       }
-
-      // Determine vulnerabilities
-      //DataForVulnerabilityScanner data = new DataForVulnerabilityScanner(this.responseEntityChain);
-      //List<IVulnerabilityDefinition> foundVulns = this.vulnHandler.StartScanning(data);
-      //this.UpdateVulnerabilitiesDgv(foundVulns);
     }
 
 

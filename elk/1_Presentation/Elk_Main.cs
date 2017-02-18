@@ -15,7 +15,7 @@
 
     #region MEMBERS
 
-    private AnalyzeServerHandler analyzeServerHandler;
+    private HostChainHandler analyzeServerHandler;
     private CrossCallHandler crossCallHandler;
     private CrawlerHandler crawlerHandler;
     private PageLinksToHandler pageLinksToHandler;
@@ -46,7 +46,7 @@
       // Initialize members
       this.responseEntityChain = new List<ServerResponseEntity>();
       this.crawlerHandler = new CrawlerHandler();
-      this.analyzeServerHandler = new AnalyzeServerHandler();
+      this.analyzeServerHandler = new HostChainHandler();
       this.crossCallHandler = new CrossCallHandler();
       this.pageLinksToHandler = new PageLinksToHandler();
       this.vulnHandler = new VulnerabilityScanner();

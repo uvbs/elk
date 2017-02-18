@@ -9,7 +9,7 @@
   using System.Text;
 
 
-  public class AnalyzeServerHandler : IObservableHostChain
+  public class HostChainHandler : IObservableHostChain
   {
 
     #region MEMBERS
@@ -32,7 +32,7 @@
 
     #region PUBLIC
 
-    public AnalyzeServerHandler()
+    public HostChainHandler()
     {
       this.requestHandler = new HttpRequestHandler();
       this.responseEntityChain = new List<ServerResponseEntity>();
@@ -41,10 +41,10 @@
     }
 
 
-    public List<ServerResponseEntity> DetermineHostsChain(string requestedUri, string userAgent)
+    public List<ServerResponseEntity> DetermineHostsChain(string requestedUri, string userAgent, List<string> headers)
     {
       ServerResponseEntity response = null;
-      HttpWebResponse webResponse = null;
+      Connection connection = null;
       bool redirected = false;
       Uri tmpUri = null;
 
@@ -68,10 +68,12 @@
         if (entityCache.ContainsKey(cacheKey))
         {
           response = entityCache[cacheKey];
+          this.responseEntityChain.Add(response);
         }
         else
         {
           Uri uri = new Uri(requestedUri);
+          response = null;
 
           // Determine IP address
           string ipAddresses = this.GetIpAddresse(uri.Host);
@@ -79,17 +81,53 @@
           // Verify if http(s) port is open
           bool httpPortOpen = this.portScanner.IsPortOpen(uri.Host, 80);
           bool httpsPortOpen = this.portScanner.IsPortOpen(uri.Host, 443);
-          
-          // Send web request to server
-          webResponse = this.requestHandler.SendGETRequest(requestedUri, string.Empty, string.Empty, false, userAgent);
 
-          response = this.ProcessServerResponse(uri.Scheme, uri.Host, uri.PathAndQuery, webResponse, userAgent);
-          response.HttpPortOpen = httpPortOpen;
-          response.HttpsPortOpen = httpsPortOpen;
-          response.IpAddresses = ipAddresses;
+          // Send web request to server
+          try
+          {
+            connection = this.requestHandler.SendGETRequest(requestedUri, string.Empty, string.Empty, false, userAgent, headers);
+          }
+          catch (WebException wex)
+          {
+            response = new ServerResponseEntity();
+            response.RequestedScheme = uri.Scheme;
+            response.RequestedHost = uri.Host;
+            response.RequestedPath = uri.PathAndQuery;
+
+            response.HttpPortOpen = httpPortOpen;
+            response.HttpsPortOpen = httpsPortOpen;
+            response.IpAddresses = ipAddresses;
+
+            this.responseEntityChain.Add(response);
+          }
+          catch (Exception ex)
+          {
+            System.Windows.Forms.MessageBox.Show(string.Format("2The following error occuredd: {0}\r\n\r\n{1}", ex.Message, ex.StackTrace));
+          }
+
+          if (connection != null &&
+              connection.Response != null)
+          {
+            response = this.ProcessServerResponse(uri.Scheme, uri.Host, uri.PathAndQuery, connection.Response, userAgent);
+            response.HttpPortOpen = httpPortOpen;
+            response.HttpsPortOpen = httpsPortOpen;
+            response.IpAddresses = ipAddresses;
+            
+            this.responseEntityChain.Add(response);
+          }
+
+          // Close connection
+          if (connection != null)
+          {
+            if (connection.Response != null)
+            {
+              connection.Response.Close();
+            }
+
+            connection = null;
+          }
         }
 
-        this.responseEntityChain.Add(response);
 
         // Initialize values for next round
         if (response != null && !string.IsNullOrEmpty(response.RedirectLocation))
@@ -101,7 +139,6 @@
 
           requestedUri = response.RedirectLocation;
           redirected = true;
-          webResponse = null;
         }
       }
       while (redirected);

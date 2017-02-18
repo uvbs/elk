@@ -1,6 +1,6 @@
 ﻿namespace Elk.Presentation
 {
-  partial class Elk_Main
+  public partial class Elk_Main
   {
     /// <summary>
     /// Required designer variable.
@@ -30,7 +30,7 @@
     {
       this.tb_DestinationUrl = new System.Windows.Forms.TextBox();
       this.label1 = new System.Windows.Forms.Label();
-      this.label2 = new System.Windows.Forms.Label();
+      this.l_HttpUrl = new System.Windows.Forms.Label();
       this.bt_StartStop = new System.Windows.Forms.Button();
       this.bgw_Crawler = new System.ComponentModel.BackgroundWorker();
       this.l_HostChainKey = new System.Windows.Forms.Label();
@@ -76,6 +76,9 @@
       this.tp_ExternalBackRedirect = new System.Windows.Forms.TabPage();
       this.cb_UserAgent = new System.Windows.Forms.ComboBox();
       this.label3 = new System.Windows.Forms.Label();
+      this.l_Cookie0 = new System.Windows.Forms.Label();
+      this.tb_CookieValue = new System.Windows.Forms.TextBox();
+      this.l_Cookie1 = new System.Windows.Forms.Label();
       this.tp_PageLinksTo.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.dgv_PageLinksTo)).BeginInit();
       this.tp_Crawler.SuspendLayout();
@@ -107,15 +110,15 @@
       this.label1.TabIndex = 1;
       this.label1.Text = "Destination URL";
       // 
-      // label2
+      // l_HttpUrl
       // 
-      this.label2.AutoSize = true;
-      this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label2.Location = new System.Drawing.Point(131, 18);
-      this.label2.Name = "label2";
-      this.label2.Size = new System.Drawing.Size(38, 13);
-      this.label2.TabIndex = 2;
-      this.label2.Text = "http://";
+      this.l_HttpUrl.AutoSize = true;
+      this.l_HttpUrl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.l_HttpUrl.Location = new System.Drawing.Point(131, 18);
+      this.l_HttpUrl.Name = "l_HttpUrl";
+      this.l_HttpUrl.Size = new System.Drawing.Size(38, 13);
+      this.l_HttpUrl.TabIndex = 2;
+      this.l_HttpUrl.Text = "http://";
       // 
       // bt_StartStop
       // 
@@ -138,7 +141,7 @@
       this.l_HostChainKey.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
       this.l_HostChainKey.AutoSize = true;
       this.l_HostChainKey.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.l_HostChainKey.Location = new System.Drawing.Point(19, 610);
+      this.l_HostChainKey.Location = new System.Drawing.Point(19, 624);
       this.l_HostChainKey.Name = "l_HostChainKey";
       this.l_HostChainKey.Size = new System.Drawing.Size(72, 13);
       this.l_HostChainKey.TabIndex = 16;
@@ -149,7 +152,7 @@
       this.l_CrawlerKey.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
       this.l_CrawlerKey.AutoSize = true;
       this.l_CrawlerKey.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.l_CrawlerKey.Location = new System.Drawing.Point(172, 610);
+      this.l_CrawlerKey.Location = new System.Drawing.Point(172, 624);
       this.l_CrawlerKey.Name = "l_CrawlerKey";
       this.l_CrawlerKey.Size = new System.Drawing.Size(53, 13);
       this.l_CrawlerKey.TabIndex = 17;
@@ -160,7 +163,7 @@
       this.l_CrawlerValue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
       this.l_CrawlerValue.AutoSize = true;
       this.l_CrawlerValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.l_CrawlerValue.Location = new System.Drawing.Point(225, 611);
+      this.l_CrawlerValue.Location = new System.Drawing.Point(225, 625);
       this.l_CrawlerValue.Name = "l_CrawlerValue";
       this.l_CrawlerValue.Size = new System.Drawing.Size(33, 13);
       this.l_CrawlerValue.TabIndex = 0;
@@ -171,7 +174,7 @@
       this.l_HostChainValue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
       this.l_HostChainValue.AutoSize = true;
       this.l_HostChainValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.l_HostChainValue.Location = new System.Drawing.Point(87, 610);
+      this.l_HostChainValue.Location = new System.Drawing.Point(87, 624);
       this.l_HostChainValue.Name = "l_HostChainValue";
       this.l_HostChainValue.Size = new System.Drawing.Size(33, 13);
       this.l_HostChainValue.TabIndex = 18;
@@ -189,7 +192,7 @@
       this.tp_CookieValueInUrl.Location = new System.Drawing.Point(4, 22);
       this.tp_CookieValueInUrl.Name = "tp_CookieValueInUrl";
       this.tp_CookieValueInUrl.Padding = new System.Windows.Forms.Padding(3);
-      this.tp_CookieValueInUrl.Size = new System.Drawing.Size(1170, 519);
+      this.tp_CookieValueInUrl.Size = new System.Drawing.Size(1170, 512);
       this.tp_CookieValueInUrl.TabIndex = 5;
       this.tp_CookieValueInUrl.Text = "Cookie value in URL";
       // 
@@ -199,7 +202,7 @@
       this.tp_SharedCookies.Location = new System.Drawing.Point(4, 22);
       this.tp_SharedCookies.Name = "tp_SharedCookies";
       this.tp_SharedCookies.Padding = new System.Windows.Forms.Padding(3);
-      this.tp_SharedCookies.Size = new System.Drawing.Size(1170, 519);
+      this.tp_SharedCookies.Size = new System.Drawing.Size(1170, 512);
       this.tp_SharedCookies.TabIndex = 4;
       this.tp_SharedCookies.Text = "Shared cookies (sub) domain";
       // 
@@ -210,7 +213,7 @@
       this.tp_PageLinksTo.Location = new System.Drawing.Point(4, 22);
       this.tp_PageLinksTo.Name = "tp_PageLinksTo";
       this.tp_PageLinksTo.Padding = new System.Windows.Forms.Padding(3);
-      this.tp_PageLinksTo.Size = new System.Drawing.Size(1170, 519);
+      this.tp_PageLinksTo.Size = new System.Drawing.Size(1170, 512);
       this.tp_PageLinksTo.TabIndex = 2;
       this.tp_PageLinksTo.Text = "Page links to";
       // 
@@ -224,7 +227,7 @@
       this.dgv_PageLinksTo.Name = "dgv_PageLinksTo";
       this.dgv_PageLinksTo.RowHeadersVisible = false;
       this.dgv_PageLinksTo.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-      this.dgv_PageLinksTo.Size = new System.Drawing.Size(1147, 497);
+      this.dgv_PageLinksTo.Size = new System.Drawing.Size(1147, 490);
       this.dgv_PageLinksTo.TabIndex = 0;
       this.dgv_PageLinksTo.DoubleClick += new System.EventHandler(this.DGV_HyperLinks_DoubleClick);
       // 
@@ -235,7 +238,7 @@
       this.tp_Crawler.Location = new System.Drawing.Point(4, 22);
       this.tp_Crawler.Name = "tp_Crawler";
       this.tp_Crawler.Padding = new System.Windows.Forms.Padding(3);
-      this.tp_Crawler.Size = new System.Drawing.Size(1170, 519);
+      this.tp_Crawler.Size = new System.Drawing.Size(1170, 512);
       this.tp_Crawler.TabIndex = 1;
       this.tp_Crawler.Text = "Crawler";
       // 
@@ -260,7 +263,7 @@
       this.tp_HostChain.Location = new System.Drawing.Point(4, 22);
       this.tp_HostChain.Name = "tp_HostChain";
       this.tp_HostChain.Padding = new System.Windows.Forms.Padding(3);
-      this.tp_HostChain.Size = new System.Drawing.Size(1170, 519);
+      this.tp_HostChain.Size = new System.Drawing.Size(1170, 512);
       this.tp_HostChain.TabIndex = 0;
       this.tp_HostChain.Text = "Host chain";
       // 
@@ -537,10 +540,10 @@
       this.tc_AnalyzeHttpServer.Controls.Add(this.tp_ExternalBackRedirect);
       this.tc_AnalyzeHttpServer.Controls.Add(this.tp_SharedCookies);
       this.tc_AnalyzeHttpServer.Controls.Add(this.tp_CookieValueInUrl);
-      this.tc_AnalyzeHttpServer.Location = new System.Drawing.Point(12, 62);
+      this.tc_AnalyzeHttpServer.Location = new System.Drawing.Point(12, 83);
       this.tc_AnalyzeHttpServer.Name = "tc_AnalyzeHttpServer";
       this.tc_AnalyzeHttpServer.SelectedIndex = 0;
-      this.tc_AnalyzeHttpServer.Size = new System.Drawing.Size(1178, 545);
+      this.tc_AnalyzeHttpServer.Size = new System.Drawing.Size(1178, 538);
       this.tc_AnalyzeHttpServer.TabIndex = 4;
       // 
       // tp_CrossCalls
@@ -549,7 +552,7 @@
       this.tp_CrossCalls.Location = new System.Drawing.Point(4, 22);
       this.tp_CrossCalls.Name = "tp_CrossCalls";
       this.tp_CrossCalls.Padding = new System.Windows.Forms.Padding(3);
-      this.tp_CrossCalls.Size = new System.Drawing.Size(1170, 519);
+      this.tp_CrossCalls.Size = new System.Drawing.Size(1170, 512);
       this.tp_CrossCalls.TabIndex = 8;
       this.tp_CrossCalls.Text = "Cross calls";
       this.tp_CrossCalls.UseVisualStyleBackColor = true;
@@ -579,7 +582,7 @@
       this.tp_ServerVulnerabilities.Location = new System.Drawing.Point(4, 22);
       this.tp_ServerVulnerabilities.Name = "tp_ServerVulnerabilities";
       this.tp_ServerVulnerabilities.Padding = new System.Windows.Forms.Padding(3);
-      this.tp_ServerVulnerabilities.Size = new System.Drawing.Size(1170, 519);
+      this.tp_ServerVulnerabilities.Size = new System.Drawing.Size(1170, 512);
       this.tp_ServerVulnerabilities.TabIndex = 6;
       this.tp_ServerVulnerabilities.Text = "Server vulnerabilities";
       this.tp_ServerVulnerabilities.UseVisualStyleBackColor = true;
@@ -604,7 +607,7 @@
       this.tp_ExternalBackRedirect.Location = new System.Drawing.Point(4, 22);
       this.tp_ExternalBackRedirect.Name = "tp_ExternalBackRedirect";
       this.tp_ExternalBackRedirect.Padding = new System.Windows.Forms.Padding(3);
-      this.tp_ExternalBackRedirect.Size = new System.Drawing.Size(1170, 519);
+      this.tp_ExternalBackRedirect.Size = new System.Drawing.Size(1170, 512);
       this.tp_ExternalBackRedirect.TabIndex = 7;
       this.tp_ExternalBackRedirect.Text = "External back redirect";
       this.tp_ExternalBackRedirect.UseVisualStyleBackColor = true;
@@ -628,11 +631,41 @@
       this.label3.TabIndex = 20;
       this.label3.Text = "User agent";
       // 
+      // l_Cookie0
+      // 
+      this.l_Cookie0.AutoSize = true;
+      this.l_Cookie0.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.l_Cookie0.Location = new System.Drawing.Point(13, 44);
+      this.l_Cookie0.Name = "l_Cookie0";
+      this.l_Cookie0.Size = new System.Drawing.Size(52, 13);
+      this.l_Cookie0.TabIndex = 21;
+      this.l_Cookie0.Text = "Cookies";
+      // 
+      // tb_CookieValue
+      // 
+      this.tb_CookieValue.Location = new System.Drawing.Point(168, 41);
+      this.tb_CookieValue.Name = "tb_CookieValue";
+      this.tb_CookieValue.Size = new System.Drawing.Size(310, 20);
+      this.tb_CookieValue.TabIndex = 22;
+      // 
+      // l_Cookie1
+      // 
+      this.l_Cookie1.AutoSize = true;
+      this.l_Cookie1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.l_Cookie1.Location = new System.Drawing.Point(129, 44);
+      this.l_Cookie1.Name = "l_Cookie1";
+      this.l_Cookie1.Size = new System.Drawing.Size(43, 13);
+      this.l_Cookie1.TabIndex = 23;
+      this.l_Cookie1.Text = "Cookie:";
+      // 
       // Elk_Main
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(1202, 636);
+      this.ClientSize = new System.Drawing.Size(1202, 650);
+      this.Controls.Add(this.tb_CookieValue);
+      this.Controls.Add(this.l_Cookie1);
+      this.Controls.Add(this.l_Cookie0);
       this.Controls.Add(this.label3);
       this.Controls.Add(this.cb_UserAgent);
       this.Controls.Add(this.l_HostChainValue);
@@ -641,7 +674,7 @@
       this.Controls.Add(this.l_HostChainKey);
       this.Controls.Add(this.tc_AnalyzeHttpServer);
       this.Controls.Add(this.bt_StartStop);
-      this.Controls.Add(this.label2);
+      this.Controls.Add(this.l_HttpUrl);
       this.Controls.Add(this.label1);
       this.Controls.Add(this.tb_DestinationUrl);
       this.MinimumSize = new System.Drawing.Size(1218, 674);
@@ -668,7 +701,7 @@
 
     private System.Windows.Forms.TextBox tb_DestinationUrl;
     private System.Windows.Forms.Label label1;
-    private System.Windows.Forms.Label label2;
+    private System.Windows.Forms.Label l_HttpUrl;
     private System.Windows.Forms.Button bt_StartStop;
     private System.ComponentModel.BackgroundWorker bgw_Crawler;
     private System.Windows.Forms.Label l_HostChainKey;
@@ -714,6 +747,9 @@
     private System.Windows.Forms.Label label3;
     private System.Windows.Forms.TabPage tp_CrossCalls;
     private System.Windows.Forms.DataGridView dgv_CrossCalls;
+    private System.Windows.Forms.Label l_Cookie0;
+    private System.Windows.Forms.TextBox tb_CookieValue;
+    private System.Windows.Forms.Label l_Cookie1;
   }
 }
 

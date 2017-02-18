@@ -137,7 +137,7 @@
     <Compile Include="DataTypes\Dgv\CrossCallRecord.cs" />
     <Compile Include="DataTypes\Enumerations\EnumExposedDataType.cs" />
     <Compile Include="DataTypes\Enumerations\EnumRequestTriggerSource.cs" />
-    <Compile Include="2_Task\AnalyzeServerHandler.cs" />
+    <Compile Include="2_Task\HostChainHandler.cs" />
     <Compile Include="2_Task\CrawlerHandler.cs" />
     <Compile Include="DataTypes\Dgv\HyperLinkRecord.cs" />
     <Compile Include="DataTypes\Interfaces\CrossCall\IObservableCrossCall.cs" />

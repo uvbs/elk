@@ -7,6 +7,13 @@
   using System.IO;
 
 
+  public class Connection
+  {
+    public HttpWebRequest Request;
+    public HttpWebResponse Response;
+  }
+
+
   public class HttpRequestHandler
   {
 
@@ -45,13 +52,9 @@
 
       try
       {
-        // Get the stream containing content returned by the server.
         dataStream = response.GetResponseStream();
-        // Open the stream using a StreamReader for easy access.
         reader = new StreamReader(dataStream);
-        // Read the content.
         responseFromServer = reader.ReadToEnd();
-        // Cleanup the streams and the response.
       }
       catch (Exception ex)
       {
@@ -73,32 +76,46 @@
       return responseFromServer;
     }
 
-    public HttpWebResponse SendPOSTRequest(string uri, string content, string login, string password, bool allowAutoRedirect, string userAgent)
+
+    public Connection SendPOSTRequest(string uri, string content, string login, string password, bool allowAutoRedirect, string userAgent, List<string> headers)
     {
-      HttpWebRequest request = GeneratePOSTRequest(uri, content, login, password, allowAutoRedirect, userAgent);
-      return GetResponse(request);
+      Connection connection = new Connection();
+      connection.Request = GeneratePOSTRequest(uri, content, login, password, allowAutoRedirect, userAgent, headers);
+      connection.Response = GetResponse(connection.Request);
+
+      return connection;
     }
 
-    public HttpWebResponse SendGETRequest(string uri, string login, string password, bool allowAutoRedirect, string userAgent)
+
+    public Connection SendGETRequest(string uri, string login, string password, bool allowAutoRedirect, string userAgent, List<string> headers)
     {
-      HttpWebRequest request = GenerateGETRequest(uri, login, password, allowAutoRedirect, userAgent);
-      return GetResponse(request);
+      Connection connection = new Connection();
+      connection.Request = this.GenerateGETRequest(uri, login, password, allowAutoRedirect, userAgent, headers);
+      connection.Response = this.GetResponse(connection.Request);
+
+      return connection;
     }
 
-    public HttpWebResponse SendRequest(string uri, string content, string method, string login, string password, bool allowAutoRedirect, string userAgent)
+
+    public Connection SendRequest(string uri, string content, string method, string login, string password, bool allowAutoRedirect, string userAgent, List<string> headers)
     {
-      HttpWebRequest request = GenerateRequest(uri, content, method, login, password, allowAutoRedirect, userAgent);
-      return GetResponse(request);
+      Connection connection = new Connection();
+      connection.Request = this.GenerateRequest(uri, content, method, login, password, allowAutoRedirect, userAgent, headers);
+      connection.Response = this.GetResponse(connection.Request);
+
+      return connection;
     }
 
-    public HttpWebRequest GenerateGETRequest(string uri, string login, string password, bool allowAutoRedirect, string userAgent)
+
+    public HttpWebRequest GenerateGETRequest(string uri, string login, string password, bool allowAutoRedirect, string userAgent, List<string> headers)
     {
-      return GenerateRequest(uri, null, "GET", null, null, allowAutoRedirect, userAgent);
+      return this.GenerateRequest(uri, null, "GET", null, null, allowAutoRedirect, userAgent, headers);
     }
 
-    public HttpWebRequest GeneratePOSTRequest(string uri, string content, string login, string password, bool allowAutoRedirect, string userAgent)
+
+    public HttpWebRequest GeneratePOSTRequest(string uri, string content, string login, string password, bool allowAutoRedirect, string userAgent, List<string> headers)
     {
-      return GenerateRequest(uri, content, "POST", null, null, allowAutoRedirect, userAgent);
+      return this.GenerateRequest(uri, content, "POST", null, null, allowAutoRedirect, userAgent, headers);
     }
 
 
@@ -143,21 +160,20 @@
 
     #region PRIVATE/INTERNAL
 
-    internal HttpWebRequest GenerateRequest(string uri, string content, string method, string login, string password, bool allowAutoRedirect, string userAgent)
+    internal HttpWebRequest GenerateRequest(string uri, string content, string method, string login, string password, bool allowAutoRedirect, string userAgent, List<string> headers)
     {
       if (uri == null)
       {
         throw new ArgumentNullException("uri");
       }
+
       // Create a request using a URL that can receive a post. 
       HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(uri);
-      // Set the Method property of the request to POST.
       request.Method = method;
-      // Set cookie container to maintain cookies
       request.CookieContainer = cookies;
       request.AllowAutoRedirect = allowAutoRedirect;
-      // Set user agent
       request.UserAgent = userAgent;
+
       // If login is empty use defaul credentials
       if (string.IsNullOrEmpty(login))
       {
@@ -167,6 +183,13 @@
       {
         request.Credentials = new NetworkCredential(login, password);
       }
+
+      if (headers != null && headers.Count > 0)
+      {
+        headers.ForEach(elem => request.Headers.Add(elem));
+      }
+
+
       if (method == "POST")
       {
         // Convert POST data to a byte array.
@@ -182,6 +205,7 @@
         // Close the Stream object.
         dataStream.Close();
       }
+
       return request;
     }
 
@@ -191,26 +215,9 @@
       {
         throw new ArgumentNullException("request");
       }
-      HttpWebResponse response = null;
-      try
-      {
-        response = (HttpWebResponse)request.GetResponse();
-        cookies.Add(response.Cookies);
-        // Print the properties of each cookie.
-        Console.WriteLine("\nCookies: ");
-        foreach (Cookie cook in cookies.GetCookies(request.RequestUri))
-        {
-          Console.WriteLine("Domain: {0}, String: {1}", cook.Domain, cook.ToString());
-        }
-      }
-      catch (WebException ex)
-      {
-        Console.WriteLine("Web exception occurred. Status code: {0}", ex.Status);
-      }
-      catch (Exception ex)
-      {
-        Console.WriteLine(ex.Message);
-      }
+
+      HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+      
       return response;
     }
 
