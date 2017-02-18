@@ -127,14 +127,26 @@
     {
       try
       {
-        int currentIndex = this.dgv_CrossCalls.CurrentCell.RowIndex;        
-        string outerHtmlData = this.dgv_CrossCalls.Rows[currentIndex].Cells["OuterHtml"].Value.ToString();
-        int line = (int) this.dgv_CrossCalls.Rows[currentIndex].Cells["Line"].Value;
-        int linePosition = (int) this.dgv_CrossCalls.Rows[currentIndex].Cells["LinePosition"].Value;
-        int streamPosition = (int)this.dgv_CrossCalls.Rows[currentIndex].Cells["StreamPosition"].Value;
-        
-        HtmlDetails_Main htmlView = new HtmlDetails_Main(this.htmlCodeCrossCalls, streamPosition, outerHtmlData.Length);
-        htmlView.ShowDialog();
+        int currentRowIndex = this.dgv_CrossCalls.CurrentCell.RowIndex;
+        int currentColIndex = this.dgv_CrossCalls.CurrentCell.ColumnIndex;
+
+        // Magic number 2, which represents the "host name" column.
+        // If a cell in column 2 was clicked copy cell value to url bar
+        if (currentColIndex == 2)
+        {
+          string url = this.dgv_CrossCalls.Rows[currentRowIndex].Cells[currentColIndex].Value.ToString();
+          tb_DestinationUrl.Text = url;
+        }
+        else
+        {
+          string outerHtmlData = this.dgv_CrossCalls.Rows[currentRowIndex].Cells["OuterHtml"].Value.ToString();
+          int line = (int)this.dgv_CrossCalls.Rows[currentRowIndex].Cells["Line"].Value;
+          int linePosition = (int)this.dgv_CrossCalls.Rows[currentRowIndex].Cells["LinePosition"].Value;
+          int streamPosition = (int)this.dgv_CrossCalls.Rows[currentRowIndex].Cells["StreamPosition"].Value;
+
+          HtmlDetails_Main htmlView = new HtmlDetails_Main(this.htmlCodeCrossCalls, streamPosition, outerHtmlData.Length);
+          htmlView.ShowDialog();
+        }
       }
       catch (Exception ex)
       {

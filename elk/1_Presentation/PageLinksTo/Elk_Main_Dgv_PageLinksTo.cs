@@ -120,14 +120,26 @@
     {
       try
       {
-        int currentIndex = this.dgv_PageLinksTo.CurrentCell.RowIndex;
-        string outerHtmlData = this.dgv_PageLinksTo.Rows[currentIndex].Cells["OuterHtml"].Value.ToString();
-        int line = (int)this.dgv_PageLinksTo.Rows[currentIndex].Cells["Line"].Value;
-        int linePosition = (int)this.dgv_PageLinksTo.Rows[currentIndex].Cells["LinePosition"].Value;
-        int streamPosition = (int)this.dgv_PageLinksTo.Rows[currentIndex].Cells["StreamPosition"].Value;
+        int currentRowIndex = this.dgv_CrossCalls.CurrentCell.RowIndex;
+        int currentColIndex = this.dgv_CrossCalls.CurrentCell.ColumnIndex;
 
-        HtmlDetails_Main htmlView = new HtmlDetails_Main(this.htmlCodeCrossCalls, streamPosition, outerHtmlData.Length);
-        htmlView.ShowDialog();
+        // Magic number 1, which represents the "host name" column.
+        // If a cell in column 1 was clicked copy cell value to url bar
+        if (currentColIndex == 1)
+        {
+          string url = this.dgv_CrossCalls.Rows[currentRowIndex].Cells[currentColIndex].Value.ToString();
+          tb_DestinationUrl.Text = url;
+        }
+        else
+        {
+          string outerHtmlData = this.dgv_PageLinksTo.Rows[currentRowIndex].Cells["OuterHtml"].Value.ToString();
+          int line = (int)this.dgv_PageLinksTo.Rows[currentRowIndex].Cells["Line"].Value;
+          int linePosition = (int)this.dgv_PageLinksTo.Rows[currentRowIndex].Cells["LinePosition"].Value;
+          int streamPosition = (int)this.dgv_PageLinksTo.Rows[currentRowIndex].Cells["StreamPosition"].Value;
+
+          HtmlDetails_Main htmlView = new HtmlDetails_Main(this.htmlCodeCrossCalls, streamPosition, outerHtmlData.Length);
+          htmlView.ShowDialog();
+        }
       }
       catch (Exception ex)
       {
