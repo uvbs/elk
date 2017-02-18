@@ -39,19 +39,19 @@
       DataTypes.ServerResponseEntity dataRecord = HostChainHandler.EntityCache[cacheKey];
       var doc = new HAP.HtmlDocument();
 
-      string htmlCode = dataRecord.Payload.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n", "\r\n");
+      string htmlCode = dataRecord.Payload?.Replace("\r\n", "\n")?.Replace("\r", "\n")?.Replace("\n", "\r\n");
       doc.LoadHtml(htmlCode);
       Dictionary<string, List<string>> relevantTags = new Dictionary<string, List<string>>() { { "script", new List<string>() { "src" } },
-                                                                                   { "embed", new List<string>() { "src" } },
-                                                                                   { "form", new List<string>() { "action" } },
-                                                                                   { "source", new List<string>() { "src", "srcset" } },
-                                                                                   { "object", new List<string>() { "data" } },
-                                                                                   { "frame", new List<string>() { "src" } },
-                                                                                   { "iframe", new List<string>() { "src" } },
-                                                                                   { "base", new List<string>() { "href" } },
-                                                                                   { "link", new List<string>() { "href" } },
-                                                                                   { "img", new List<string>() { "src" } }
-                                                                                };
+                                                                                               { "embed", new List<string>() { "src" } },
+                                                                                               { "form", new List<string>() { "action" } },
+                                                                                               { "source", new List<string>() { "src", "srcset" } },
+                                                                                               { "object", new List<string>() { "data" } },
+                                                                                               { "frame", new List<string>() { "src" } },
+                                                                                               { "iframe", new List<string>() { "src" } },
+                                                                                               { "base", new List<string>() { "href" } },
+                                                                                               { "link", new List<string>() { "href" } },
+                                                                                               { "img", new List<string>() { "src" } }
+                                                                                            };
       var root = doc.DocumentNode;
 
       foreach (string tagName in relevantTags.Keys)
